@@ -11,8 +11,8 @@
     <color name="orange_back_ground">#FFC694</color>
     <color name="orange_main">#FA9D12</color>
     <color name="orange_light">#EDFFC587</color>
-    <color name="bottom_view_icons_color">@color/black</color>
-    <color name="bottom_view_color">@color/white</color>
-    <color name="notification_search_logout_fab_background_tint">@color/white</color>
-    <color name="notification_search_logout_fab_tint">@color/black</color>
+    <color name="bottom_view_icons_color">@color/white</color>
+    <color name="bottom_view_color">@color/dark_grey</color>
+    <color name="notification_search_logout_fab_background_tint">@color/dark_grey</color>
+    <color name="notification_search_logout_fab_tint">@color/white</color>
 </resources>

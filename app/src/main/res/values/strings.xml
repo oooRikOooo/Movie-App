@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">FilmsHelper</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="Search">Search</string>
+    <string name="Cinemas">Cinemas</string>
+    <string name="Profile">Profile</string>
+    <string name="notifications">Notifications</string>
 </resources>
