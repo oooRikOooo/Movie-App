@@ -1,33 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="end|top"
-        android:layout_margin="20dp"
-        android:backgroundTint="@color/notification_search_logout_fab_background_tint"
-        android:contentDescription="@string/notifications"
-        android:src="@drawable/ic_baseline_notifications_none_24"
-        app:borderWidth="0dp"
-        app:fabCustomSize="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/notification_search_logout_fab_tint" />
+    <data>
+
+    </data>
 
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="First Fragment"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".presentation.screens.MainFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/textViewNowShowing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/now_showing"
+                android:textColor="@color/now_showing_films"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toTopOf="@+id/recyclerviewNowShowing"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonSeeMoreNowShowing"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto_light"
+                android:text="@string/see_more"
+                android:textColor="@color/grey"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:background="@drawable/button_see_more"
+                app:layout_constraintBottom_toTopOf="@+id/recyclerviewNowShowing"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerviewNowShowing"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewNowShowing"
+                tools:listitem="@layout/now_showing_item_list">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/textViewPopular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/popular"
+                android:textColor="@color/now_showing_films"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toTopOf="@+id/recyclerviewPopular"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerviewNowShowing" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonSeeMorePopularMovies"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:fontFamily="@font/roboto_light"
+                android:text="@string/see_more"
+                android:textColor="@color/grey"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/button_see_more"
+                app:layout_constraintBottom_toTopOf="@+id/recyclerviewPopular"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintTop_toBottomOf="@id/recyclerviewNowShowing"  />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerviewPopular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewPopular"
+                tools:listitem="@layout/popular_item_list">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</layout>

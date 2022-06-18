@@ -6,4 +6,16 @@
     <string name="Cinemas">Cinemas</string>
     <string name="Profile">Profile</string>
     <string name="notifications">Notifications</string>
+    <string name="film_name">FilmName</string>
+    <string name="rating">Rating</string>
+    <string name="now_showing">Now Showing</string>
+    <string name="title">Title</string>
+    <string name="year">Year</string>
+    <string name="popular">Popular</string>
+    <string name="see_more">See more</string>
+    <string name="rating_imdb">%1$s/10 IMDb</string>
+    <string name="add_to_favourites">Add to favourites</string>
+    <string name="length">Length</string>
+    <string name="language">Language</string>
+    <string name="description">Description</string>
 </resources>

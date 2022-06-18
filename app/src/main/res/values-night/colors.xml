@@ -15,4 +15,7 @@
     <color name="bottom_view_color">@color/dark_grey</color>
     <color name="notification_search_logout_fab_background_tint">@color/dark_grey</color>
     <color name="notification_search_logout_fab_tint">@color/white</color>
+    <color name="now_showing_films">#D1CFFF</color>
+    <color name="black_white">@color/white</color>
+    <color name="white_black">#121212</color>
 </resources>

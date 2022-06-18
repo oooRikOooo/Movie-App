@@ -15,4 +15,10 @@
     <color name="bottom_view_color">@color/white</color>
     <color name="notification_search_logout_fab_background_tint">@color/white</color>
     <color name="notification_search_logout_fab_tint">@color/black</color>
+    <color name="black_white">@color/black</color>
+    <color name="white_black">@color/white</color>
+    <color name="grey">#D3D2D2</color>
+    <color name="now_showing_films">#110E47</color>
+    <color name="category_text">#688DEC</color>
+    <color name="category_background">#DCE3FF</color>
 </resources>
