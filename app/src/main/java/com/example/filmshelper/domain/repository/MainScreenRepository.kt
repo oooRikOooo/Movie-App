@@ -8,11 +8,11 @@ import retrofit2.Response
 
 interface MainScreenRepository {
 
-    suspend fun getMoviesInTheaters(): NowShowingMovies
+    suspend fun getMoviesInTheaters(): Result<NowShowingMovies>
 
-    suspend fun getPopularMovies(): MostPopularMovies
+    suspend fun getPopularMovies(): Result<MostPopularMovies>
 
-    suspend fun getMovieById(id:String): FilmDetails
+    suspend fun getMovieById(id:String): Result<FilmDetails>
 
-    suspend fun getMovieTrailerById(id:String): YoutubeTrailer
+    suspend fun getMovieTrailerById(id:String): Result<YoutubeTrailer>
 }

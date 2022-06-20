@@ -105,11 +105,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewPopular"
                 tools:listitem="@layout/popular_item_list">
 
+
             </androidx.recyclerview.widget.RecyclerView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+
 
 
 </layout>

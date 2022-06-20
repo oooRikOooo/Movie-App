@@ -31,9 +31,11 @@ android {
         jvmTarget = '1.8'
     }
 
-    buildFeatures{
+    buildFeatures {
         dataBinding true
     }
+
+
 }
 
 dependencies {
@@ -61,6 +63,11 @@ dependencies {
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.0.1'
 
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
+    //skeleton view
+
+    implementation 'com.faltenreich:skeletonlayout:4.0.0'
+
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'

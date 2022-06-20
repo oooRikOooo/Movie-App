@@ -19,22 +19,22 @@ private const val API_KEY1 = "k_zvyokdrf"
 
 interface ApiService {
 
-    @GET("InTheaters/$API_KEY2")
+    @GET("InTheaters/$API_KEY1")
     suspend fun getMoviesInTheaters(): NowShowingMovies
 
-    @GET("MostPopularMovies/$API_KEY2")
+    @GET("MostPopularMovies/$API_KEY1")
     suspend fun getPopularMovies(): MostPopularMovies
 
-    @GET("MostPopularTVs/$API_KEY2")
+    @GET("MostPopularTVs/$API_KEY1")
     suspend fun getPopularTvShows(): MostPopularTvShows
 
 
-    @GET("Title/$API_KEY2/{id}")
+    @GET("Title/$API_KEY1/{id}")
     suspend fun getMovieById(
        @Path("id") id:String
     ): FilmDetails
 
-    @GET("YouTubeTrailer/$API_KEY2/{id}")
+    @GET("YouTubeTrailer/$API_KEY1/{id}")
     suspend fun getMovieTrailerById(
         @Path("id") id: String
     ): YoutubeTrailer

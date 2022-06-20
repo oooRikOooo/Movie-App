@@ -10,6 +10,7 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".presentation.screens.FilmDetailsFragment">
@@ -56,6 +57,7 @@
 
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="-20dp"
@@ -64,17 +66,18 @@
 
 
             <androidx.cardview.widget.CardView
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:cardCornerRadius="20dp"
-                android:background="@color/white_black"
+                android:layout_marginTop="20dp"
+                android:backgroundTint="@color/white_black"
                 >
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:background="@color/white_black"
                     android:orientation="vertical">
 
@@ -234,8 +237,25 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+
+
         </androidx.core.widget.NestedScrollView>
 
+        <ProgressBar
+            android:id="@+id/progressBarVideo"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:layout_gravity="center"/>
+
+        <ProgressBar
+            android:id="@+id/progressBarNestedScroll"
+            android:visibility="visible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:layout_gravity="top|center"/>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -25,8 +27,9 @@ import javax.inject.Inject
 
 class FilmDetailsFragment : Fragment() {
 
-    private lateinit var binding : FragmentFilmDetailsBinding
-    private val viewModel : MainViewModel by viewModels{
+    private lateinit var binding: FragmentFilmDetailsBinding
+
+    private val viewModel: MainViewModel by viewModels {
         factory.create()
     }
 
@@ -60,40 +63,102 @@ class FilmDetailsFragment : Fragment() {
 
     private fun getData() {
 
-        viewModel.youtubeTrailer.observe(viewLifecycleOwner){
-
-            binding.infoTrailer = it
-            binding.youtubePlayer.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
-                override fun onReady(youTubePlayer: YouTubePlayer) {
-                    //youTubePlayer.loadVideo(it.videoId, 0f)
-                    youTubePlayer.cueVideo(it.videoId, 0f)
+        viewModel.youtubeTrailer.observe(viewLifecycleOwner) {
+            when (it) {
+                is MainViewModel.ViewStateYoutubeTrailerById.Error -> {
+                    Log.d("riko", "${it.error}1")
                 }
-            })
+                MainViewModel.ViewStateYoutubeTrailerById.Loading -> {
+
+                    setViewAndProgressBarVisibility(binding.appBarLayout, View.INVISIBLE,
+                        binding.progressBarVideo, View.VISIBLE)
+                    /*binding.appBarLayout.visibility = View.INVISIBLE
+                    binding.progressBarVideo.visibility = View.VISIBLE*/
+                    Log.d("riko", "Loading1")
+                }
+                MainViewModel.ViewStateYoutubeTrailerById.NoData -> {
+                    Log.d("riko", "NoData1")
+                }
+                is MainViewModel.ViewStateYoutubeTrailerById.Success -> {
+
+                    binding.infoTrailer = it.data
+
+                    binding.youtubePlayer.addYouTubePlayerListener(object :
+                        AbstractYouTubePlayerListener() {
+                        override fun onReady(youTubePlayer: YouTubePlayer) {
+                            youTubePlayer.cueVideo(it.data.videoId, 0f)
+                        }
+                    })
+
+                    setViewAndProgressBarVisibility(binding.appBarLayout, View.VISIBLE,
+                        binding.progressBarVideo, View.INVISIBLE)
+                    /*binding.appBarLayout.visibility = View.VISIBLE
+                    binding.progressBarVideo.visibility = View.INVISIBLE*/
+
+                }
+            }
+
+
         }
 
-        viewModel.filmById.observe(viewLifecycleOwner){
-            binding.apply {
-                categoriesAdapter.list = it.genreList
-                textViewFilmTitle.text = it.title
-                textViewRatingImdb.text = requireContext().getString(R.string.rating_imdb, it.imDbRating)
-                textViewLength.text = it.runtimeMins
+        viewModel.filmById.observe(viewLifecycleOwner) {
 
-                if (it.languages.contains(",")){
+            when (it) {
+                is MainViewModel.ViewStateMovieById.Error -> {
+                    Log.d("riko", "${it.error}2")
+                }
+                MainViewModel.ViewStateMovieById.Loading -> {
+                    Log.d("riko", "Loading2")
+                    setViewAndProgressBarVisibility(binding.nestedScroll, View.INVISIBLE,
+                        binding.progressBarNestedScroll, View.VISIBLE)
+                    /*binding.nestedScroll.visibility = View.INVISIBLE
+                    binding.progressBarNestedScroll.visibility = View.VISIBLE*/
+                }
+                MainViewModel.ViewStateMovieById.NoData -> {
+                    Log.d("riko", "NoData2")
+                }
+                is MainViewModel.ViewStateMovieById.Success -> {
+                    binding.apply {
+                        categoriesAdapter.list = it.data.genreList
+                        textViewFilmTitle.text = it.data.title
+                        textViewRatingImdb.text =
+                            requireContext().getString(R.string.rating_imdb, it.data.imDbRating)
+                        textViewLength.text = it.data.runtimeMins
 
-                    val kept: String = it.languages.substring(0, it.languages.indexOf(","))
-                    Log.d("riko", kept)
-                    textViewLanguage.text = kept
+                        if (it.data.languages.contains(",")) {
 
-                } else textViewLanguage.text = it.languages
+                            val kept: String =
+                                it.data.languages.substring(0, it.data.languages.indexOf(","))
+                            Log.d("riko", kept)
+                            textViewLanguage.text = kept
 
-                textViewContentRating.text = it.contentRating
-                textViewDescription.text = it.plot
+                        } else textViewLanguage.text = it.data.languages
+
+                        textViewContentRating.text = it.data.contentRating
+                        textViewDescription.text = it.data.plot
+
+
+                        /*binding.nestedScroll.visibility = View.VISIBLE
+                        binding.progressBarNestedScroll.visibility = View.INVISIBLE*/
+
+                    }
+                    setViewAndProgressBarVisibility(binding.nestedScroll, View.VISIBLE,
+                        binding.progressBarNestedScroll, View.INVISIBLE)
+
+                }
 
             }
+
         }
+
     }
 
-    private fun setupAdapter(){
+    private fun setViewAndProgressBarVisibility(view: View, statusView: Int, progressBar: ProgressBar, statusBar: Int){
+        view.visibility = statusView
+        progressBar.visibility = statusBar
+    }
+
+    private fun setupAdapter() {
 
         binding.recyclerView.apply {
             setHasFixedSize(true)
@@ -103,7 +168,6 @@ class FilmDetailsFragment : Fragment() {
 
             adapter = categoriesAdapter
         }
-
 
 
     }
