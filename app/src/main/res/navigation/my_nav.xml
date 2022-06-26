@@ -7,22 +7,31 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.filmshelper.MainFragment"
+        android:name="com.example.filmshelper.presentation.screens.MainFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_filmDetailsFragment"
+            app:destination="@id/filmDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.example.filmshelper.SearchFragment"
+        android:name="com.example.filmshelper.presentation.screens.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/locationFragment"
-        android:name="com.example.filmshelper.LocationFragment"
+        android:name="com.example.filmshelper.presentation.screens.LocationFragment"
         android:label="fragment_location"
         tools:layout="@layout/fragment_location" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.filmshelper.ProfileFragment"
+        android:name="com.example.filmshelper.presentation.screens.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/filmDetailsFragment"
+        android:name="com.example.filmshelper.presentation.screens.FilmDetailsFragment"
+        android:label="fragment_film_details"
+        tools:layout="@layout/fragment_film_details" />
 </navigation>
