@@ -1,7 +1,5 @@
-package com.example.filmshelper
+package com.example.filmshelper.presentation.screens.mainFragment
 
-import android.view.View
-import androidx.constraintlayout.motion.utils.ViewState
 import androidx.lifecycle.*
 import com.example.filmshelper.data.models.FilmDetails.FilmDetails
 import com.example.filmshelper.data.models.nowShowingMovies.ItemNowShowingMovies
@@ -11,7 +9,7 @@ import com.example.filmshelper.domain.repository.MainScreenRepository
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class MainFragmentViewModel @Inject constructor(
     private val repository: MainScreenRepository
 ) : ViewModel() {
 
@@ -31,15 +29,6 @@ class MainViewModel @Inject constructor(
     private val _listPopularMovies = MutableLiveData<ViewStatePopularMovies>()
     private val _filmById = MutableLiveData<ViewStateMovieById>()
     private val _youtubeTrailer = MutableLiveData<ViewStateYoutubeTrailerById>()
-
-    /*init {
-        getNowShowingMovies()
-        getPopularMovies()
-    }*/
-
-    /*private fun getNowShowingMovies() = viewModelScope.launch{
-        _listNowShowingMovies.postValue(repository.getMoviesInTheaters().items)
-    }*/
 
     fun getNowShowingMovies() = viewModelScope.launch{
         _listNowShowingMovies.postValue(ViewStateNowShowingMovies.Loading)
@@ -113,18 +102,6 @@ class MainViewModel @Inject constructor(
             _youtubeTrailer.postValue(ViewStateYoutubeTrailerById.Error(result.exceptionOrNull()!!))
         }
     }
-
-    /*private fun getPopularMovies() = viewModelScope.launch {
-        _listPopularMovies.postValue(repository.getPopularMovies().items)
-    }*/
-
-    /*fun getMovieById(id: String) = viewModelScope.launch {
-        _filmById.postValue(repository.getMovieById(id))
-    }*/
-
-    /*fun getYoutubeTrailerById(id: String) = viewModelScope.launch {
-        _youtubeTrailer.postValue(repository.getMovieTrailerById(id))
-    }*/
 
     sealed class ViewStateNowShowingMovies{
         data class Success(val data: List<ItemNowShowingMovies>) : ViewStateNowShowingMovies()

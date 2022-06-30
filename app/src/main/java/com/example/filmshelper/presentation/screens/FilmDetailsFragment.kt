@@ -7,12 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.example.filmshelper.MainViewModel
-import com.example.filmshelper.MainViewModelFactory
+import com.example.filmshelper.presentation.screens.mainFragment.MainFragmentViewModel
+import com.example.filmshelper.presentation.screens.mainFragment.MainFragmentViewModelFactory
 import com.example.filmshelper.R
 import com.example.filmshelper.appComponent
 import com.example.filmshelper.databinding.FragmentFilmDetailsBinding
@@ -29,12 +27,12 @@ class FilmDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentFilmDetailsBinding
 
-    private val viewModel: MainViewModel by viewModels {
+    private val viewModel: MainFragmentViewModel by viewModels {
         factory.create()
     }
 
     @Inject
-    lateinit var factory: MainViewModelFactory.Factory
+    lateinit var factory: MainFragmentViewModelFactory.Factory
 
     private val categoriesAdapter = CategoriesAdapter()
 
@@ -65,10 +63,10 @@ class FilmDetailsFragment : Fragment() {
 
         viewModel.youtubeTrailer.observe(viewLifecycleOwner) {
             when (it) {
-                is MainViewModel.ViewStateYoutubeTrailerById.Error -> {
+                is MainFragmentViewModel.ViewStateYoutubeTrailerById.Error -> {
                     Log.d("riko", "${it.error}1")
                 }
-                MainViewModel.ViewStateYoutubeTrailerById.Loading -> {
+                MainFragmentViewModel.ViewStateYoutubeTrailerById.Loading -> {
 
                     setViewAndProgressBarVisibility(binding.appBarLayout, View.INVISIBLE,
                         binding.progressBarVideo, View.VISIBLE)
@@ -76,10 +74,10 @@ class FilmDetailsFragment : Fragment() {
                     binding.progressBarVideo.visibility = View.VISIBLE*/
                     Log.d("riko", "Loading1")
                 }
-                MainViewModel.ViewStateYoutubeTrailerById.NoData -> {
+                MainFragmentViewModel.ViewStateYoutubeTrailerById.NoData -> {
                     Log.d("riko", "NoData1")
                 }
-                is MainViewModel.ViewStateYoutubeTrailerById.Success -> {
+                is MainFragmentViewModel.ViewStateYoutubeTrailerById.Success -> {
 
                     binding.infoTrailer = it.data
 
@@ -104,20 +102,20 @@ class FilmDetailsFragment : Fragment() {
         viewModel.filmById.observe(viewLifecycleOwner) {
 
             when (it) {
-                is MainViewModel.ViewStateMovieById.Error -> {
+                is MainFragmentViewModel.ViewStateMovieById.Error -> {
                     Log.d("riko", "${it.error}2")
                 }
-                MainViewModel.ViewStateMovieById.Loading -> {
+                MainFragmentViewModel.ViewStateMovieById.Loading -> {
                     Log.d("riko", "Loading2")
                     setViewAndProgressBarVisibility(binding.nestedScroll, View.INVISIBLE,
                         binding.progressBarNestedScroll, View.VISIBLE)
                     /*binding.nestedScroll.visibility = View.INVISIBLE
                     binding.progressBarNestedScroll.visibility = View.VISIBLE*/
                 }
-                MainViewModel.ViewStateMovieById.NoData -> {
+                MainFragmentViewModel.ViewStateMovieById.NoData -> {
                     Log.d("riko", "NoData2")
                 }
-                is MainViewModel.ViewStateMovieById.Success -> {
+                is MainFragmentViewModel.ViewStateMovieById.Success -> {
                     binding.apply {
                         categoriesAdapter.list = it.data.genreList
                         textViewFilmTitle.text = it.data.title

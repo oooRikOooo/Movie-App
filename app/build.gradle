@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    /*id 'com.google.gms.google-services'*/
 }
 
 android {
@@ -43,6 +45,7 @@ dependencies {
     //dagger2
     implementation 'com.google.dagger:dagger:2.42'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
     kapt 'com.google.dagger:dagger-compiler:2.42'
 
     //retrofit
@@ -65,9 +68,12 @@ dependencies {
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
 
     //skeleton view
-
     implementation 'com.faltenreich:skeletonlayout:4.0.0'
 
+    //firebase
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.6'
 
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.4.2'
