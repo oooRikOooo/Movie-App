@@ -10,21 +10,28 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.filmshelper.R
+import com.example.filmshelper.appComponent
 import com.example.filmshelper.databinding.FragmentProfileBinding
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.squareup.picasso.Picasso
+import javax.inject.Inject
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding : FragmentProfileBinding
 
-    private val viewModel : ProfileViewModel by viewModels()
+    private val viewModel : ProfileViewModel by viewModels {
+        factory.create()
+    }
 
-    private var storageRef = Firebase.storage.reference
+    @Inject
+    lateinit var factory: ProfileViewModelFactory.Factory
+
+    //private var storageRef = Firebase.storage.reference
 
     override fun onAttach(context: Context) {
-        //context.appComponent.inject(this)
+        context.appComponent.inject(this)
         super.onAttach(context)
     }
 
@@ -35,18 +42,9 @@ class ProfileFragment : Fragment() {
 
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
-        /*if (viewModel.auth.currentUser == null){
-            findNavController().navigate(R.id.action_profileFragment_to_profileSignUpFragment)
-        }*/
-
         binding.textViewEmail.text = viewModel.auth.currentUser?.email
         binding.textViewProfileName.text = viewModel.auth.currentUser?.displayName
-        //binding.imageViewProfilePhoto.setImageURI(viewModel.auth.currentUser?.photoUrl)
         Picasso.get().load(viewModel.auth.currentUser?.photoUrl).fit().centerCrop().into(binding.imageViewProfilePhoto)
-        /*storageRef.child("images/${viewModel.auth.currentUser?.uid}profilePicture").downloadUrl.addOnCompleteListener {
-            //Picasso.get().load(viewModel.auth.currentUser?.photoUrl).into(binding.imageViewProfilePhoto)
-            Picasso.get().load(it.result).fit().centerCrop().into(binding.imageViewProfilePhoto)
-        }*/
 
         binding.logout.setOnClickListener {
             viewModel.auth.signOut()
@@ -57,6 +55,10 @@ class ProfileFragment : Fragment() {
 
         binding.editProfile.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
+        }
+
+        binding.favouriteMovies.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_favouritesFilmsFragment)
         }
 
         return binding.root

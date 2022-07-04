@@ -43,7 +43,7 @@ class PopularMoviesAdapter : RecyclerView.Adapter<PopularMoviesAdapter.PopularFi
         holder.itemView.setOnClickListener {
             it.findNavController().navigate(R.id.action_mainFragment_to_filmDetailsFragment,
                 Bundle().apply {
-                    putString("filmId", list[position].id)
+                    putString("filmId", list[position].movieId)
             })
         }
     }

@@ -1,5 +1,6 @@
 package com.example.filmshelper.presentation.screens.profileFragments
 
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -11,13 +12,25 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.filmshelper.R
+import com.example.filmshelper.appComponent
 import com.example.filmshelper.databinding.FragmentProfileSignUpBinding
+import javax.inject.Inject
 
 class ProfileSignUpFragment : Fragment() {
 
     private lateinit var binding : FragmentProfileSignUpBinding
 
-    private val viewModel : ProfileViewModel by viewModels()
+    private val viewModel : ProfileViewModel by viewModels{
+        factory.create()
+    }
+
+    @Inject
+    lateinit var factory: ProfileViewModelFactory.Factory
+
+    override fun onAttach(context: Context) {
+        context.appComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

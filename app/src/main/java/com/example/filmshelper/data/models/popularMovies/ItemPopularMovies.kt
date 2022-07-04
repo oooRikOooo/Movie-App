@@ -1,9 +1,17 @@
 package com.example.filmshelper.data.models.popularMovies
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
+
+//@Entity(tableName = "popular_films_table")
 data class ItemPopularMovies(
+    /*@PrimaryKey(autoGenerate = true)
+    val id: Int,*/
     val crew: String,
     val fullTitle: String,
-    val id: String,
+    @SerializedName("id")
+    val movieId: String,
     val imDbRating: String,
     val imDbRatingCount: String,
     val image: String,

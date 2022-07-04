@@ -1,6 +1,7 @@
 package com.example.filmshelper.presentation.screens.profileFragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -17,21 +18,29 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.filmshelper.R
+import com.example.filmshelper.appComponent
 import com.example.filmshelper.databinding.FragmentEditProfileBinding
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.squareup.picasso.Picasso
+import javax.inject.Inject
 
 class EditProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentEditProfileBinding
 
-    private val viewModel : ProfileViewModel by viewModels()
+    private val viewModel : ProfileViewModel by viewModels{
+        factory.create()
+    }
+
+    @Inject
+    lateinit var factory: ProfileViewModelFactory.Factory
 
     private var photoUri: Uri? = null
 
-    //private var storageRef = Firebase.storage.reference
-
-    //private lateinit var photoStorageFirebase : Uri
+    override fun onAttach(context: Context) {
+        context.appComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +50,7 @@ class EditProfileFragment : Fragment() {
 
         binding.editTextPersonName.setText(viewModel.auth.currentUser?.displayName)
         Picasso.get().load(viewModel.auth.currentUser!!.photoUrl).fit().centerCrop().into(binding.imageViewProfilePhoto)
-
+        photoUri = viewModel.auth.currentUser?.photoUrl
         setOnClickListeners()
 
         return binding.root
@@ -54,10 +63,8 @@ class EditProfileFragment : Fragment() {
                     Toast.makeText(requireContext(), "Fill all fields", Toast.LENGTH_SHORT).show()
                 } else {
                     val name = editTextPersonName.text
-                    //val photoLocale : Uri? = photoUri
-                    uploadPhoto()
 
-                    updateProfile(name)
+                    uploadPhoto(name)
                 }
             }
 
@@ -68,10 +75,17 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    private fun uploadPhoto(){
+    private fun uploadPhoto(name: Editable) {
         val ref = viewModel.storageRef.child("images/${viewModel.auth.currentUser?.uid}profilePicture")
-        photoUri?.let { ref.putFile(it) }?.addOnSuccessListener {
-            Log.d("riko", "Uploaded")
+        if (photoUri == viewModel.auth.currentUser?.photoUrl){
+            updateProfile(name)
+        } else {
+            photoUri?.let { ref.putFile(it) }?.addOnProgressListener {
+                binding.progressBar.visibility = View.VISIBLE
+            }?.addOnSuccessListener {
+                binding.progressBar.visibility = View.GONE
+                updateProfile(name)
+            }
         }
     }
 
@@ -80,6 +94,7 @@ class EditProfileFragment : Fragment() {
         viewModel.getPhotoUri()
 
         viewModel.photoUrl.observe(viewLifecycleOwner){
+            Log.d("riko", it.toString())
             if (it == viewModel.auth.currentUser?.photoUrl){
                 Log.d("riko","1")
                 val updates = UserProfileChangeRequest.Builder().setDisplayName(name.toString())
@@ -107,8 +122,6 @@ class EditProfileFragment : Fragment() {
                     }
                 }
             }
-
-            Log.d("riko",viewModel.auth.currentUser?.photoUrl.toString())
         }
 
 
@@ -132,7 +145,8 @@ class EditProfileFragment : Fragment() {
             val data : Uri? = result.data!!.data
 
             photoUri = data
-            //binding.imageViewProfilePhoto.setImageURI(data)
+
+            Picasso.get().load(photoUri).fit().centerCrop().into(binding.imageViewProfilePhoto)
         }
     }
 

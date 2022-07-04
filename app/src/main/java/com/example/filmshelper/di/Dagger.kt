@@ -2,10 +2,12 @@ package com.example.filmshelper
 
 import com.example.filmshelper.data.ApiService
 import com.example.filmshelper.data.repository.MainScreenRepositoryImpl
+import com.example.filmshelper.data.repository.ProfileRepositoryImpl
 import com.example.filmshelper.domain.repository.MainScreenRepository
+import com.example.filmshelper.domain.repository.ProfileRepository
 import com.example.filmshelper.presentation.screens.*
 import com.example.filmshelper.presentation.screens.mainFragment.MainFragment
-import com.example.filmshelper.presentation.screens.profileFragments.ProfileFragment
+import com.example.filmshelper.presentation.screens.profileFragments.*
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Binds
 import dagger.Component
@@ -24,6 +26,10 @@ interface AppComponent {
     fun inject(fragment: LocationFragment)
     fun inject(fragment: ProfileFragment)
     fun inject(fragment: FilmDetailsFragment)
+    fun inject(fragment: EditProfileFragment)
+    fun inject(fragment: FavouritesFilmsFragment)
+    fun inject(fragment: ProfileSignInFragment)
+    fun inject(fragment:ProfileSignUpFragment)
 
 }
 
@@ -53,4 +59,10 @@ interface AppBindModule {
     fun bindMainScreenRepositoryImpl_to_MainScreenRepository(
         mainScreenRepositoryImpl: MainScreenRepositoryImpl
     ): MainScreenRepository
+
+    @Suppress("FunctionName")
+    @Binds
+    fun bindProfileRepositoryImpl_to_ProfileRepository(
+        profileRepositoryImpl: ProfileRepositoryImpl
+    ): ProfileRepository
 }

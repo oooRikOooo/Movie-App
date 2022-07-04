@@ -43,6 +43,9 @@
             android:id="@+id/action_profileFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment"
             app:launchSingleTop="true"/>
+        <action
+            android:id="@+id/action_profileFragment_to_favouritesFilmsFragment"
+            app:destination="@id/favouritesFilmsFragment" />
     </fragment>
     <fragment
         android:id="@+id/filmDetailsFragment"
@@ -91,4 +94,9 @@
             app:destination="@id/profileFragment"
             app:launchSingleTop="true"/>
     </fragment>
+    <fragment
+        android:id="@+id/favouritesFilmsFragment"
+        android:name="com.example.filmshelper.presentation.screens.profileFragments.FavouritesFilmsFragment"
+        android:label="fragment_favourites_films"
+        tools:layout="@layout/fragment_favourites_films" />
 </navigation>

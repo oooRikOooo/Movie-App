@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         tools:context=".presentation.screens.profileFragments.ProfileFragment">
 
 
@@ -67,6 +68,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewEmail">
 
+            <include
+                android:id="@+id/favouriteMovies"
+                layout="@layout/favourite_movies_cardview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
 
             <include
                 android:id="@+id/editProfile"

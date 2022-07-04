@@ -26,4 +26,5 @@
     <color name="button_sigh_up">#E21221</color>
     <color name="sign_up_to_sign_in">#E41F2E</color>
     <color name="fab_background">#E21221</color>
+    <color name="background_rating_of_favourite_film">#E21221</color>
 </resources>

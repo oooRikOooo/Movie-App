@@ -50,7 +50,6 @@ class MainFragment : Fragment() {
         viewModel.getNowShowingMovies()
         viewModel.getPopularMovies()
 
-
         setupAdapters()
         getDataForAdapter()
 
@@ -83,7 +82,6 @@ class MainFragment : Fragment() {
         skeletonPopular.showSkeleton()
 
         viewModel.listNowShowingMovies.observe(viewLifecycleOwner) {
-
 
             when (it) {
                 is MainFragmentViewModel.ViewStateNowShowingMovies.Error -> {
