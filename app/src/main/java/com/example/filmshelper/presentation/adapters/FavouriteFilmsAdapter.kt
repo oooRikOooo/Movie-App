@@ -1,6 +1,5 @@
 package com.example.filmshelper.presentation.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -19,13 +18,9 @@ class FavouriteFilmsAdapter: RecyclerView.Adapter<FavouriteFilmsAdapter.Favourit
     class FavouriteFilmsViewHolder(private val binding: ItemFavouriteFilmsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item : FirebaseUserFavouriteFilms){
             binding.apply {
-                Log.d("riko", item.imageUrl)
                 textViewRating.text = item.rating ?: "0"
                 Picasso.get().load(item.imageUrl).fit()
                     .centerCrop().into(imageView)
-
-
-
             }
         }
 

@@ -3,11 +3,11 @@ package com.example.filmshelper.presentation.screens.mainFragment
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -85,26 +85,17 @@ class MainFragment : Fragment() {
 
             when (it) {
                 is MainFragmentViewModel.ViewStateNowShowingMovies.Error -> {
-                    //Toast.makeText(requireContext(), "${it.error}", Toast.LENGTH_SHORT).show()
                     Log.d("riko", "${it.error}")
                 }
                 MainFragmentViewModel.ViewStateNowShowingMovies.Loading -> {
-                    //Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
                     Log.d("riko", "Loading")
-
-                     /*binding.recyclerviewNowShowing.visibility = View.GONE
-                     binding.textViewNowShowing.visibility = View.GONE
-                     binding.buttonSeeMoreNowShowing.visibility = View.GONE*/
                 }
                 MainFragmentViewModel.ViewStateNowShowingMovies.NoData -> {
-                    //Toast.makeText(requireContext(), "NoData", Toast.LENGTH_SHORT).show()
                     Log.d("riko", "NoData")
                 }
                 is MainFragmentViewModel.ViewStateNowShowingMovies.Success -> {
                     nowShowingAdapter.list = it.data
-                    /*binding.recyclerviewNowShowing.visibility = View.VISIBLE
-                    binding.textViewNowShowing.visibility = View.VISIBLE
-                    binding.buttonSeeMoreNowShowing.visibility = View.VISIBLE*/
+
                     skeletonNowShowing.showOriginal()
                 }
             }
@@ -116,24 +107,15 @@ class MainFragment : Fragment() {
             when (it) {
                 is MainFragmentViewModel.ViewStatePopularMovies.Error -> {
                     Toast.makeText(requireContext(), "${it.error}1", Toast.LENGTH_SHORT).show()
-                    Log.d("riko", "${it.error}1")
                 }
                 MainFragmentViewModel.ViewStatePopularMovies.Loading -> {
-                    //Toast.makeText(requireContext(), "Loading1", Toast.LENGTH_SHORT).show()
-                    Log.d("riko", "Loading1")
-                    /*binding.recyclerviewPopular.visibility = View.GONE
-                    binding.textViewPopular.visibility = View.GONE
-                    binding.buttonSeeMorePopularMovies.visibility = View.GONE*/
+
                 }
                 MainFragmentViewModel.ViewStatePopularMovies.NoData -> {
-                    Toast.makeText(requireContext(), "NoData1", Toast.LENGTH_SHORT).show()
                     Toast.makeText(requireContext(), "NoData1", Toast.LENGTH_SHORT).show()
                 }
                 is MainFragmentViewModel.ViewStatePopularMovies.Success -> {
                     popularMoviesAdapter.list = it.data
-                    /*binding.recyclerviewPopular.visibility = View.VISIBLE
-                    binding.textViewPopular.visibility = View.VISIBLE
-                    binding.buttonSeeMorePopularMovies.visibility = View.VISIBLE*/
                     skeletonPopular.showOriginal()
                 }
             }

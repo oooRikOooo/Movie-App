@@ -1,9 +1,7 @@
 package com.example.filmshelper.presentation.screens
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import android.transition.TransitionInflater
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -12,13 +10,13 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.filmshelper.presentation.screens.mainFragment.MainFragmentViewModel
-import com.example.filmshelper.presentation.screens.mainFragment.MainFragmentViewModelFactory
 import com.example.filmshelper.R
 import com.example.filmshelper.appComponent
 import com.example.filmshelper.data.models.FirebaseUserFavouriteFilms
 import com.example.filmshelper.databinding.FragmentFilmDetailsBinding
 import com.example.filmshelper.presentation.adapters.CategoriesAdapter
+import com.example.filmshelper.presentation.screens.mainFragment.MainFragmentViewModel
+import com.example.filmshelper.presentation.screens.mainFragment.MainFragmentViewModelFactory
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
@@ -26,8 +24,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
@@ -119,9 +115,6 @@ class FilmDetailsFragment : Fragment() {
                 taskList.forEach { item ->
 
                     if (item.id == film.data.id) {
-                        Log.d("riko", item.id)
-                        Log.d("riko", film.data.id)
-                        Log.d("riko", "removing")
                         removeFavouriteFilm(film)
                     }
                 }
@@ -176,7 +169,6 @@ class FilmDetailsFragment : Fragment() {
                     "Not Added",
                     Toast.LENGTH_SHORT
                 ).show()
-                Log.d("riko", it.toString())
             }
     }
 
@@ -207,45 +199,6 @@ class FilmDetailsFragment : Fragment() {
     }
 
     private fun getData() {
-
-        /*viewModel.youtubeTrailer.observe(viewLifecycleOwner) {
-            when (it) {
-                is MainFragmentViewModel.ViewStateYoutubeTrailerById.Error -> {
-                    Log.d("riko", "${it.error}1")
-                }
-                MainFragmentViewModel.ViewStateYoutubeTrailerById.Loading -> {
-
-                    setViewAndProgressBarVisibility(
-                        binding.appBarLayout, View.INVISIBLE,
-                        binding.progressBarVideo, View.VISIBLE
-                    )
-                    Log.d("riko", "Loading1")
-                }
-                MainFragmentViewModel.ViewStateYoutubeTrailerById.NoData -> {
-                    Log.d("riko", "NoData1")
-                }
-                is MainFragmentViewModel.ViewStateYoutubeTrailerById.Success -> {
-
-                    binding.infoTrailer = it.data
-
-                    *//*binding.youtubePlayer.addYouTubePlayerListener(object :
-                        AbstractYouTubePlayerListener() {
-                        override fun onReady(youTubePlayer: YouTubePlayer) {
-                            youTubePlayer.cueVideo(it.data.videoId, 0f)
-                        }
-                    })*//*
-
-                    setViewAndProgressBarVisibility(
-                        binding.appBarLayout, View.VISIBLE,
-                        binding.progressBarVideo, View.INVISIBLE
-                    )
-
-                }
-            }
-
-
-        }*/
-
         viewModel.filmById.observe(viewLifecycleOwner) {
 
             when (it) {
@@ -272,12 +225,10 @@ class FilmDetailsFragment : Fragment() {
                             requireContext().getString(R.string.rating_imdb, it.data.imDbRating)
                         textViewLength.text = it.data.runtimeMins
                         Picasso.get().load(it.data.image).noFade().fit().centerCrop().into(mainImageView)
-                        Log.d("riko", it.data.image)
                         if (it.data.languages.contains(",")) {
 
                             val kept: String =
                                 it.data.languages.substring(0, it.data.languages.indexOf(","))
-                            Log.d("riko", kept)
                             textViewLanguage.text = kept
 
                         } else textViewLanguage.text = it.data.languages

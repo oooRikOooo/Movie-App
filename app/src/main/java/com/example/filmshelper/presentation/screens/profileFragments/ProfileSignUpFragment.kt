@@ -3,12 +3,11 @@ package com.example.filmshelper.presentation.screens.profileFragments
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.filmshelper.R
@@ -57,7 +56,7 @@ class ProfileSignUpFragment : Fragment() {
 
         binding.textViewToSignIn.setOnClickListener {
             findNavController().navigate(R.id.action_profileSignUpFragment_to_profileSignInFragment)
-            //findNavController().popBackStack(R.id.profileSignInFragment, false)
+
         }
     }
 
@@ -65,12 +64,8 @@ class ProfileSignUpFragment : Fragment() {
         viewModel.auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
                 if (it.isSuccessful){
-                    Log.d("riko", "user created")
                     Toast.makeText(requireContext(), "Successfully registered", Toast.LENGTH_SHORT).show()
                     findNavController().navigate(R.id.action_profileSignUpFragment_to_profileFragment)
-                    //findNavController().popBackStack(R.id.profileFragment, false)
-                } else {
-                    Log.d("riko", "user not created")
                 }
             }
     }

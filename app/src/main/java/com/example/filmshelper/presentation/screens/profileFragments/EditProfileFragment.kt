@@ -8,13 +8,12 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextUtils
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.filmshelper.R
@@ -94,34 +93,48 @@ class EditProfileFragment : Fragment() {
         viewModel.getPhotoUri()
 
         viewModel.photoUrl.observe(viewLifecycleOwner){
-            Log.d("riko", it.toString())
-            if (it == viewModel.auth.currentUser?.photoUrl){
-                Log.d("riko","1")
-                val updates = UserProfileChangeRequest.Builder().setDisplayName(name.toString())
-                    .build()
 
-                viewModel.auth.currentUser?.updateProfile(updates)?.addOnCompleteListener { update ->
-                    if (update.isSuccessful){
-                        Toast.makeText(requireContext(), "Successfully updated", Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
-                    } else {
-                        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
-                    }
-                }
+            if (it == null) {
+                Toast.makeText(requireContext(), "No Photo", Toast.LENGTH_SHORT).show()
             } else {
-                Log.d("riko","2")
-                val updates = UserProfileChangeRequest.Builder().setDisplayName(name.toString()).setPhotoUri(it)
-                    .build()
+                if (it == viewModel.auth.currentUser?.photoUrl) {
+                    val updates = UserProfileChangeRequest.Builder().setDisplayName(name.toString())
+                        .build()
 
-                viewModel.auth.currentUser?.updateProfile(updates)?.addOnCompleteListener { update ->
-                    if (update.isSuccessful){
-                        Toast.makeText(requireContext(), "Successfully updated", Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
-                    } else {
-                        Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
-                    }
+                    viewModel.auth.currentUser?.updateProfile(updates)
+                        ?.addOnCompleteListener { update ->
+                            if (update.isSuccessful) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Successfully updated",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
+                            } else {
+                                Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                } else {
+                    val updates = UserProfileChangeRequest.Builder().setDisplayName(name.toString())
+                        .setPhotoUri(it)
+                        .build()
+
+                    viewModel.auth.currentUser?.updateProfile(updates)
+                        ?.addOnCompleteListener { update ->
+                            if (update.isSuccessful) {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Successfully updated",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                findNavController().navigate(R.id.action_editProfileFragment_to_profileFragment)
+                            } else {
+                                Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                 }
             }
+
         }
 
 

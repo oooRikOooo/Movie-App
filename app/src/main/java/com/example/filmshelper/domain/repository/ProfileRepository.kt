@@ -6,5 +6,5 @@ import com.google.firebase.storage.StorageReference
 
 interface ProfileRepository {
 
-    suspend fun getPhotoUri(storageRef : StorageReference,auth: FirebaseAuth):Uri
+    suspend fun getPhotoUri(storageRef: StorageReference, auth: FirebaseAuth): Uri?
 }

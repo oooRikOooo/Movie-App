@@ -5,7 +5,9 @@ import com.example.filmshelper.data.repository.MainScreenRepositoryImpl
 import com.example.filmshelper.data.repository.ProfileRepositoryImpl
 import com.example.filmshelper.domain.repository.MainScreenRepository
 import com.example.filmshelper.domain.repository.ProfileRepository
-import com.example.filmshelper.presentation.screens.*
+import com.example.filmshelper.presentation.screens.FilmDetailsFragment
+import com.example.filmshelper.presentation.screens.LocationFragment
+import com.example.filmshelper.presentation.screens.SearchFragment
 import com.example.filmshelper.presentation.screens.mainFragment.MainFragment
 import com.example.filmshelper.presentation.screens.profileFragments.*
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -19,7 +21,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 @Component(modules = [AppModule::class])
 interface AppComponent {
 
-    /*fun inject(application: MainApp)*/
     fun inject(activity: MainActivity)
     fun inject(fragment: MainFragment)
     fun inject(fragment: SearchFragment)
@@ -29,7 +30,7 @@ interface AppComponent {
     fun inject(fragment: EditProfileFragment)
     fun inject(fragment: FavouritesFilmsFragment)
     fun inject(fragment: ProfileSignInFragment)
-    fun inject(fragment:ProfileSignUpFragment)
+    fun inject(fragment: ProfileSignUpFragment)
 
 }
 

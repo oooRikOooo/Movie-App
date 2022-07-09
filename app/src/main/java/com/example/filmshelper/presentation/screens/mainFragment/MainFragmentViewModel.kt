@@ -1,7 +1,9 @@
 package com.example.filmshelper.presentation.screens.mainFragment
 
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.filmshelper.data.models.FilmDetails.FilmDetails
 import com.example.filmshelper.data.models.nowShowingMovies.ItemNowShowingMovies
 import com.example.filmshelper.data.models.popularMovies.ItemPopularMovies
@@ -37,18 +39,14 @@ class MainFragmentViewModel @Inject constructor(
 
         if (result.isSuccess){
             result.getOrNull()?.items?.let {
-                Log.d("riko", "Successfully")
-                Log.d("riko", it.size.toString())
                 _listNowShowingMovies.postValue(ViewStateNowShowingMovies.Success(it))
             } ?: run{
-                Log.d("riko", "NoData")
                 _listNowShowingMovies.postValue(ViewStateNowShowingMovies.NoData)
             }
 
         }
 
         else {
-            Log.d("riko", "Error")
             _listNowShowingMovies.postValue(ViewStateNowShowingMovies.Error(result.exceptionOrNull()!!))
         }
     }
