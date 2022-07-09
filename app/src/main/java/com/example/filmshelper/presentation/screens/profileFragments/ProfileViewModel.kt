@@ -21,15 +21,33 @@ class ProfileViewModel @Inject constructor(
     var auth: FirebaseAuth = Firebase.auth
     var storageRef = Firebase.storage.reference
 
-    val photoUrl: LiveData<Uri>
+    val photoUrl: LiveData<ViewStatePhotoUri>
         get() = _photoUrl
 
-    private val _photoUrl = MutableLiveData<Uri>()
+    private val _photoUrl = MutableLiveData<ViewStatePhotoUri>()
 
-    fun getPhotoUri(){
+    fun getPhotoUri() {
         viewModelScope.launch(Dispatchers.IO) {
-            _photoUrl.postValue(profileRepository.getPhotoUri(storageRef, auth))
+            _photoUrl.postValue(ViewStatePhotoUri.Loading)
+
+            val result = profileRepository.getPhotoUri(storageRef, auth)
+            if (result.isSuccess) {
+                result.getOrNull()?.let {
+                    _photoUrl.postValue(ViewStatePhotoUri.Success(it))
+                } ?: run {
+                    _photoUrl.postValue(ViewStatePhotoUri.NoData)
+                }
+            } else {
+                _photoUrl.postValue(ViewStatePhotoUri.Error(result.exceptionOrNull()!!))
+            }
         }
+    }
+
+    sealed class ViewStatePhotoUri {
+        data class Success(val data: Uri) : ViewStatePhotoUri()
+        object NoData : ViewStatePhotoUri()
+        object Loading : ViewStatePhotoUri()
+        data class Error(val error: Throwable) : ViewStatePhotoUri()
     }
 
 }

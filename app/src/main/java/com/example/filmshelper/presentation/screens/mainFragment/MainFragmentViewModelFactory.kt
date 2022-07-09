@@ -11,9 +11,9 @@ class MainFragmentViewModelFactory @AssistedInject constructor(
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         require(modelClass == MainFragmentViewModel::class.java)
-        return MainFragmentViewModel( repository) as T
+        return MainFragmentViewModel(repository) as T
     }
 
     @AssistedFactory
