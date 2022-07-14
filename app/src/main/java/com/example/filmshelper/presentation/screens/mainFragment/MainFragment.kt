@@ -1,18 +1,16 @@
-package com.example.filmshelper.presentation.screens
+package com.example.filmshelper.presentation.screens.mainFragment
 
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.filmshelper.MainViewModel
-import com.example.filmshelper.MainViewModelFactory
 import com.example.filmshelper.R
 import com.example.filmshelper.appComponent
 import com.example.filmshelper.databinding.FragmentMainBinding
@@ -26,12 +24,12 @@ class MainFragment : Fragment() {
 
     private lateinit var binding: FragmentMainBinding
 
-    private val viewModel: MainViewModel by viewModels {
+    private val viewModel: MainFragmentViewModel by viewModels {
         factory.create()
     }
 
     @Inject
-    lateinit var factory: MainViewModelFactory.Factory
+    lateinit var factory: MainFragmentViewModelFactory.Factory
 
     private val nowShowingAdapter = NowShowingFilmsAdapter()
     private val popularMoviesAdapter = PopularMoviesAdapter()
@@ -51,7 +49,6 @@ class MainFragment : Fragment() {
 
         viewModel.getNowShowingMovies()
         viewModel.getPopularMovies()
-
 
         setupAdapters()
         getDataForAdapter()
@@ -86,29 +83,19 @@ class MainFragment : Fragment() {
 
         viewModel.listNowShowingMovies.observe(viewLifecycleOwner) {
 
-
             when (it) {
-                is MainViewModel.ViewStateNowShowingMovies.Error -> {
-                    Toast.makeText(requireContext(), "${it.error}", Toast.LENGTH_SHORT).show()
+                is MainFragmentViewModel.ViewStateNowShowingMovies.Error -> {
                     Log.d("riko", "${it.error}")
                 }
-                MainViewModel.ViewStateNowShowingMovies.Loading -> {
-                    Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
+                MainFragmentViewModel.ViewStateNowShowingMovies.Loading -> {
                     Log.d("riko", "Loading")
-
-                     /*binding.recyclerviewNowShowing.visibility = View.GONE
-                     binding.textViewNowShowing.visibility = View.GONE
-                     binding.buttonSeeMoreNowShowing.visibility = View.GONE*/
                 }
-                MainViewModel.ViewStateNowShowingMovies.NoData -> {
-                    Toast.makeText(requireContext(), "NoData", Toast.LENGTH_SHORT).show()
+                MainFragmentViewModel.ViewStateNowShowingMovies.NoData -> {
                     Log.d("riko", "NoData")
                 }
-                is MainViewModel.ViewStateNowShowingMovies.Success -> {
+                is MainFragmentViewModel.ViewStateNowShowingMovies.Success -> {
                     nowShowingAdapter.list = it.data
-                    /*binding.recyclerviewNowShowing.visibility = View.VISIBLE
-                    binding.textViewNowShowing.visibility = View.VISIBLE
-                    binding.buttonSeeMoreNowShowing.visibility = View.VISIBLE*/
+
                     skeletonNowShowing.showOriginal()
                 }
             }
@@ -118,26 +105,17 @@ class MainFragment : Fragment() {
         viewModel.listPopularMovies.observe(viewLifecycleOwner) {
 
             when (it) {
-                is MainViewModel.ViewStatePopularMovies.Error -> {
+                is MainFragmentViewModel.ViewStatePopularMovies.Error -> {
                     Toast.makeText(requireContext(), "${it.error}1", Toast.LENGTH_SHORT).show()
-                    Log.d("riko", "${it.error}1")
                 }
-                MainViewModel.ViewStatePopularMovies.Loading -> {
-                    Toast.makeText(requireContext(), "Loading1", Toast.LENGTH_SHORT).show()
-                    Log.d("riko", "Loading1")
-                    /*binding.recyclerviewPopular.visibility = View.GONE
-                    binding.textViewPopular.visibility = View.GONE
-                    binding.buttonSeeMorePopularMovies.visibility = View.GONE*/
+                MainFragmentViewModel.ViewStatePopularMovies.Loading -> {
+
                 }
-                MainViewModel.ViewStatePopularMovies.NoData -> {
-                    Toast.makeText(requireContext(), "NoData1", Toast.LENGTH_SHORT).show()
+                MainFragmentViewModel.ViewStatePopularMovies.NoData -> {
                     Toast.makeText(requireContext(), "NoData1", Toast.LENGTH_SHORT).show()
                 }
-                is MainViewModel.ViewStatePopularMovies.Success -> {
+                is MainFragmentViewModel.ViewStatePopularMovies.Success -> {
                     popularMoviesAdapter.list = it.data
-                    /*binding.recyclerviewPopular.visibility = View.VISIBLE
-                    binding.textViewPopular.visibility = View.VISIBLE
-                    binding.buttonSeeMorePopularMovies.visibility = View.VISIBLE*/
                     skeletonPopular.showOriginal()
                 }
             }

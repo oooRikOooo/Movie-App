@@ -6,9 +6,19 @@
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable-night/bottom_navigation.xml" value="0.3125" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/bottom_navigation.xml" value="0.33" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/button_see_more.xml" value="0.3125" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/button_sign_up.xml" value="0.3125" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/category_background.xml" value="0.3125" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/edit_text_sign_up.xml" value="0.3125" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/ic_account_circle.xml" value="0.273" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/ic_baseline_arrow_forward_ios_24.xml" value="0.3125" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.3125" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.3125" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.3125" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/ic_baseline_favorite_not_pressed_24.xml" value="0.3125" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/ic_baseline_help_24.xml" value="0.3125" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.3125" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/ic_baseline_logout_24.xml" value="0.3125" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/ic_baseline_notifications_none_24.xml" value="0.3125" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/ic_baseline_star_24.xml" value="0.3125" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/ic_explore.xml" value="0.273" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/ic_home.xml" value="0.273" />
@@ -16,6 +26,7 @@
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/line.xml" value="0.3125" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/notification_button_style.xml" value="0.3125" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/rounded_nested_view_details.xml" value="0.3125" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/rounded_text_view_rating_favourite_film.xml" value="0.3125" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/drawable/toolbar_oval.xml" value="0.3125" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/font/roboto.xml" value="0.3958333333333333" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/font/roboto_light.xml" value="0.396875" />
@@ -24,14 +35,25 @@
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/category_list_item.xml" value="0.75" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/child_list_view.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/edit_profile_cardview.xml" value="0.3111413043478261" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/favourite_movies_cardview.xml" value="0.3111413043478261" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/fragment_edit_profile.xml" value="0.3111413043478261" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/fragment_favourites_films.xml" value="0.3111413043478261" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/fragment_film_details.xml" value="0.31007751937984496" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/fragment_location.xml" value="0.358695652173913" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/fragment_main.xml" value="0.33" />
-        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/fragment_profile.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/fragment_profile_sign_in.xml" value="0.33" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/fragment_profile_sign_up.xml" value="0.26222826086956524" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/fragment_search.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/help_center_cardview.xml" value="0.3111413043478261" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/item_favourite_films.xml" value="0.3111413043478261" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/list_item_nested_recycler_view.xml" value="0.33" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/logout_cardview.xml" value="0.3111413043478261" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/notifications_cardview.xml" value="0.3111413043478261" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/now_showing_item_list.xml" value="0.26222826086956524" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/popular_item_list.xml" value="0.5" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/profile_cardview.xml" value="0.3111413043478261" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/toolbar.xml" value="0.358695652173913" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/menu-v26/bottom_menu.xml" value="0.365625" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/menu/bottom_menu.xml" value="0.36666666666666664" />
@@ -43,5 +65,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1" />
+      </ProjectState>
+    </option>
   </component>
 </project>

@@ -18,4 +18,5 @@
     <color name="now_showing_films">#D1CFFF</color>
     <color name="black_white">@color/white</color>
     <color name="white_black">#121212</color>
+    <color name="light_grey">#1F222A</color>
 </resources>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "717915431734",
+    "project_id": "filmshelper",
+    "storage_bucket": "filmshelper.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:717915431734:android:b1e469190662107b8f4997",
+        "android_client_info": {
+          "package_name": "com.example.filmshelper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "717915431734-d3ive0kai5odeb94mb2523cs3veb53id.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.filmshelper",
+            "certificate_hash": "6165be334228b69d3e723b76a76ab14a5419bedb"
+          }
+        },
+        {
+          "client_id": "717915431734-173gqt2iroim1mncfv723isto8ca3spt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKpCbqShHoSfB_UhHqMd8XAgTs0p4FgQI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "717915431734-173gqt2iroim1mncfv723isto8ca3spt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

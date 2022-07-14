@@ -9,19 +9,22 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.example.filmshelper.MainViewModel
-import com.example.filmshelper.MainViewModelFactory
 import com.example.filmshelper.R
 import com.example.filmshelper.appComponent
+import com.example.filmshelper.data.models.FirebaseUserFavouriteFilms
 import com.example.filmshelper.databinding.FragmentFilmDetailsBinding
 import com.example.filmshelper.presentation.adapters.CategoriesAdapter
+import com.example.filmshelper.presentation.screens.mainFragment.MainFragmentViewModel
+import com.example.filmshelper.presentation.screens.mainFragment.MainFragmentViewModelFactory
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
 
@@ -29,12 +32,15 @@ class FilmDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentFilmDetailsBinding
 
-    private val viewModel: MainViewModel by viewModels {
+    private val viewModel: MainFragmentViewModel by viewModels {
         factory.create()
     }
 
+    private val database = Firebase.firestore
+    private var user: FirebaseUser? = Firebase.auth.currentUser
+
     @Inject
-    lateinit var factory: MainViewModelFactory.Factory
+    lateinit var factory: MainFragmentViewModelFactory.Factory
 
     private val categoriesAdapter = CategoriesAdapter()
 
@@ -55,81 +61,174 @@ class FilmDetailsFragment : Fragment() {
 
         viewModel.getMovieById(filmId.toString())
         viewModel.getYoutubeTrailerById(filmId.toString())
+        if (user != null){
+            isFilmFavourite(filmId!!)
+        }
+        setOnClickListeners()
         setupAdapter()
         getData()
 
         return binding.root
     }
 
-    private fun getData() {
 
-        viewModel.youtubeTrailer.observe(viewLifecycleOwner) {
-            when (it) {
-                is MainViewModel.ViewStateYoutubeTrailerById.Error -> {
-                    Log.d("riko", "${it.error}1")
-                }
-                MainViewModel.ViewStateYoutubeTrailerById.Loading -> {
+    private fun setOnClickListeners() {
+        binding.apply {
+            imageButtonFavourites.setOnClickListener {
+                if (user != null) {
+                    when (viewModel.filmById.value) {
 
-                    setViewAndProgressBarVisibility(binding.appBarLayout, View.INVISIBLE,
-                        binding.progressBarVideo, View.VISIBLE)
-                    /*binding.appBarLayout.visibility = View.INVISIBLE
-                    binding.progressBarVideo.visibility = View.VISIBLE*/
-                    Log.d("riko", "Loading1")
-                }
-                MainViewModel.ViewStateYoutubeTrailerById.NoData -> {
-                    Log.d("riko", "NoData1")
-                }
-                is MainViewModel.ViewStateYoutubeTrailerById.Success -> {
+                        is MainFragmentViewModel.ViewStateMovieById.Success -> {
+                            val item =
+                                (viewModel.filmById.value as MainFragmentViewModel.ViewStateMovieById.Success)
 
-                    binding.infoTrailer = it.data
+                            //addFavouriteFilm(item)
+                            setFavouriteFilmState(item)
 
-                    binding.youtubePlayer.addYouTubePlayerListener(object :
-                        AbstractYouTubePlayerListener() {
-                        override fun onReady(youTubePlayer: YouTubePlayer) {
-                            youTubePlayer.cueVideo(it.data.videoId, 0f)
                         }
-                    })
-
-                    setViewAndProgressBarVisibility(binding.appBarLayout, View.VISIBLE,
-                        binding.progressBarVideo, View.INVISIBLE)
-                    /*binding.appBarLayout.visibility = View.VISIBLE
-                    binding.progressBarVideo.visibility = View.INVISIBLE*/
-
+                        is MainFragmentViewModel.ViewStateMovieById.Error -> {
+                            Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
+                        }
+                        MainFragmentViewModel.ViewStateMovieById.Loading -> {
+                            Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
+                        }
+                        MainFragmentViewModel.ViewStateMovieById.NoData -> {
+                            Toast.makeText(requireContext(), "No data", Toast.LENGTH_SHORT).show()
+                        }
+                        null -> {
+                            Toast.makeText(requireContext(), "Null", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "Login in your account", Toast.LENGTH_SHORT).show()
                 }
+
             }
-
-
         }
+    }
 
+    private fun setFavouriteFilmState(film: MainFragmentViewModel.ViewStateMovieById.Success) {
+        database.collection("users").document(user!!.uid)
+            .collection("favouriteFilms").get().addOnSuccessListener {
+                val taskList: List<FirebaseUserFavouriteFilms> =
+                    it.toObjects(FirebaseUserFavouriteFilms::class.java)
+                taskList.forEach { item ->
+
+                    if (item.id == film.data.id) {
+                        removeFavouriteFilm(film)
+                    }
+                }
+
+                val count = taskList.filter { filterItem ->
+                    filterItem.id == film.data.id
+                }.size
+
+                if (count == 0){
+                    addFavouriteFilm(film)
+                }
+
+
+            }
+    }
+
+
+    private fun removeFavouriteFilm(item: MainFragmentViewModel.ViewStateMovieById.Success) {
+        database.collection("users").document(user!!.uid)
+            .collection("favouriteFilms").document(item.data.id).delete()
+            .addOnSuccessListener {
+                binding.imageButtonFavourites.setImageResource(R.drawable.ic_baseline_favorite_not_pressed_24)
+            }.addOnFailureListener {
+                Toast.makeText(
+                    requireContext(),
+                    "Error",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
+
+    private fun addFavouriteFilm(item: MainFragmentViewModel.ViewStateMovieById.Success) {
+
+        val film = FirebaseUserFavouriteFilms(
+            item.data.id,
+            item.data.image,
+            item.data.imDbRating ?: "no info",
+            item.data.title
+        )
+        database.collection("users").document(user!!.uid)
+            .collection("favouriteFilms")
+            .document(film.id).set(film).addOnSuccessListener {
+                Toast.makeText(
+                    requireContext(),
+                    "Added successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
+                binding.imageButtonFavourites.setImageResource(R.drawable.ic_baseline_favorite_24)
+            }.addOnFailureListener {
+                Toast.makeText(
+                    requireContext(),
+                    "Not Added",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+    }
+
+    private fun isFilmFavourite(id: String) {
+        database.collection("users").document(user!!.uid)
+            .collection("favouriteFilms").get().addOnSuccessListener {
+                val taskList: List<FirebaseUserFavouriteFilms> =
+                    it.toObjects(FirebaseUserFavouriteFilms::class.java)
+                /*taskList.forEach { item ->
+                    if (item.id == id) {
+                        binding.imageButtonFavourites.setImageResource(R.drawable.ic_baseline_favorite_24)
+                    } else {
+                        binding.imageButtonFavourites.setImageResource(R.drawable.ic_baseline_favorite_not_pressed_24)
+                    }
+
+                }*/
+                val count = taskList.filter { filterItem ->
+                    filterItem.id == id
+                }.size
+
+                if (count == 0){
+                    binding.imageButtonFavourites.setImageResource(R.drawable.ic_baseline_favorite_not_pressed_24)
+                } else {
+                    binding.imageButtonFavourites.setImageResource(R.drawable.ic_baseline_favorite_24)
+                }
+
+            }
+    }
+
+    private fun getData() {
         viewModel.filmById.observe(viewLifecycleOwner) {
 
             when (it) {
-                is MainViewModel.ViewStateMovieById.Error -> {
+                is MainFragmentViewModel.ViewStateMovieById.Error -> {
                     Log.d("riko", "${it.error}2")
                 }
-                MainViewModel.ViewStateMovieById.Loading -> {
+                MainFragmentViewModel.ViewStateMovieById.Loading -> {
                     Log.d("riko", "Loading2")
-                    setViewAndProgressBarVisibility(binding.nestedScroll, View.INVISIBLE,
-                        binding.progressBarNestedScroll, View.VISIBLE)
-                    /*binding.nestedScroll.visibility = View.INVISIBLE
-                    binding.progressBarNestedScroll.visibility = View.VISIBLE*/
+                    setViewAndProgressBarVisibility(
+                        binding.nestedScroll, View.INVISIBLE,
+                        binding.progressBarNestedScroll, View.VISIBLE
+                    )
+
                 }
-                MainViewModel.ViewStateMovieById.NoData -> {
+                MainFragmentViewModel.ViewStateMovieById.NoData -> {
                     Log.d("riko", "NoData2")
                 }
-                is MainViewModel.ViewStateMovieById.Success -> {
+                is MainFragmentViewModel.ViewStateMovieById.Success -> {
                     binding.apply {
+
                         categoriesAdapter.list = it.data.genreList
                         textViewFilmTitle.text = it.data.title
                         textViewRatingImdb.text =
                             requireContext().getString(R.string.rating_imdb, it.data.imDbRating)
                         textViewLength.text = it.data.runtimeMins
-
+                        Picasso.get().load(it.data.image).noFade().fit().centerCrop().into(mainImageView)
                         if (it.data.languages.contains(",")) {
 
                             val kept: String =
                                 it.data.languages.substring(0, it.data.languages.indexOf(","))
-                            Log.d("riko", kept)
                             textViewLanguage.text = kept
 
                         } else textViewLanguage.text = it.data.languages
@@ -138,12 +237,11 @@ class FilmDetailsFragment : Fragment() {
                         textViewDescription.text = it.data.plot
 
 
-                        /*binding.nestedScroll.visibility = View.VISIBLE
-                        binding.progressBarNestedScroll.visibility = View.INVISIBLE*/
-
                     }
-                    setViewAndProgressBarVisibility(binding.nestedScroll, View.VISIBLE,
-                        binding.progressBarNestedScroll, View.INVISIBLE)
+                    setViewAndProgressBarVisibility(
+                        binding.nestedScroll, View.VISIBLE,
+                        binding.progressBarNestedScroll, View.INVISIBLE
+                    )
 
                 }
 
@@ -153,7 +251,12 @@ class FilmDetailsFragment : Fragment() {
 
     }
 
-    private fun setViewAndProgressBarVisibility(view: View, statusView: Int, progressBar: ProgressBar, statusBar: Int){
+    private fun setViewAndProgressBarVisibility(
+        view: View,
+        statusView: Int,
+        progressBar: ProgressBar,
+        statusBar: Int
+    ) {
         view.visibility = statusView
         progressBar.visibility = statusBar
     }
