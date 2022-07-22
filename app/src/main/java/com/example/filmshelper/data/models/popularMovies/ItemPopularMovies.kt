@@ -4,10 +4,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-//@Entity(tableName = "popular_films_table")
+@Entity(tableName = "popular_films_table")
 data class ItemPopularMovies(
-    /*@PrimaryKey(autoGenerate = true)
-    val id: Int,*/
+    @PrimaryKey(autoGenerate = true)
+    val idFilm: Int,
     val crew: String,
     val fullTitle: String,
     @SerializedName("id")

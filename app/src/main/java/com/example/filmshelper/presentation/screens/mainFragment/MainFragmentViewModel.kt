@@ -9,6 +9,7 @@ import com.example.filmshelper.data.models.nowShowingMovies.ItemNowShowingMovies
 import com.example.filmshelper.data.models.popularMovies.ItemPopularMovies
 import com.example.filmshelper.data.models.youtubeTrailer.YoutubeTrailer
 import com.example.filmshelper.domain.repository.MainScreenRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,13 +34,17 @@ class MainFragmentViewModel @Inject constructor(
     private val _filmById = MutableLiveData<ViewStateMovieById>()
     private val _youtubeTrailer = MutableLiveData<ViewStateYoutubeTrailerById>()
 
-    fun getNowShowingMovies() = viewModelScope.launch{
+    fun getNowShowingMovies() = viewModelScope.launch(Dispatchers.IO){
         _listNowShowingMovies.postValue(ViewStateNowShowingMovies.Loading)
         val result = repository.getMoviesInTheaters()
 
         if (result.isSuccess){
             result.getOrNull()?.items?.let {
                 _listNowShowingMovies.postValue(ViewStateNowShowingMovies.Success(it))
+                it.forEach { itemNowShowingFilm ->
+                    repository.addOrUpdateLocaleNowShowingFilms(itemNowShowingFilm)
+
+                }
             } ?: run{
                 _listNowShowingMovies.postValue(ViewStateNowShowingMovies.NoData)
             }
@@ -51,13 +56,16 @@ class MainFragmentViewModel @Inject constructor(
         }
     }
 
-    fun getPopularMovies() = viewModelScope.launch{
+    fun getPopularMovies() = viewModelScope.launch(Dispatchers.IO){
         _listPopularMovies.postValue(ViewStatePopularMovies.Loading)
         val result = repository.getPopularMovies()
 
         if (result.isSuccess){
             result.getOrNull()?.items?.let {
                 _listPopularMovies.postValue(ViewStatePopularMovies.Success(it))
+                it.forEach{ itemPopularFilm ->
+                    repository.addOrUpdateLocalePopularFilms(itemPopularFilm)
+                }
             } ?: run{
                 _listPopularMovies.postValue(ViewStatePopularMovies.NoData)
             }
