@@ -1,6 +1,7 @@
 package com.example.filmshelper.data.models.nowShowingMovies
 
 data class NowShowingMovies(
-    val errorMessage: String,
-    val items: List<ItemNowShowingMovies>
+    val errorMessage: Any,
+    val queryString: String,
+    val results: List<ItemNowShowingMovies>
 )

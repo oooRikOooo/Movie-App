@@ -6,7 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.filmshelper.data.models.nowShowingMovies.ItemNowShowingMovies
 import com.example.filmshelper.data.models.popularMovies.ItemPopularMovies
-import dagger.Provides
 
 
 @Dao

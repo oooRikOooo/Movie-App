@@ -3,8 +3,7 @@ package com.example.filmshelper.presentation.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.filmshelper.data.models.FilmDetails.Genre
-import com.example.filmshelper.data.models.popularMovies.ItemPopularMovies
+import com.example.filmshelper.data.models.filmDetails.Genre
 import com.example.filmshelper.databinding.CategoryListItemBinding
 
 class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {

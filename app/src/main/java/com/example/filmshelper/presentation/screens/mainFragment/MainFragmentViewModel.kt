@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.filmshelper.data.models.FilmDetails.FilmDetails
+import com.example.filmshelper.data.models.filmDetails.FilmDetails
 import com.example.filmshelper.data.models.nowShowingMovies.ItemNowShowingMovies
 import com.example.filmshelper.data.models.popularMovies.ItemPopularMovies
 import com.example.filmshelper.data.models.youtubeTrailer.YoutubeTrailer
@@ -39,7 +39,7 @@ class MainFragmentViewModel @Inject constructor(
         val result = repository.getMoviesInTheaters()
 
         if (result.isSuccess){
-            result.getOrNull()?.items?.let {
+            result.getOrNull()?.results?.let {
                 _listNowShowingMovies.postValue(ViewStateNowShowingMovies.Success(it))
                 it.forEach { itemNowShowingFilm ->
                     repository.addOrUpdateLocaleNowShowingFilms(itemNowShowingFilm)
@@ -61,7 +61,7 @@ class MainFragmentViewModel @Inject constructor(
         val result = repository.getPopularMovies()
 
         if (result.isSuccess){
-            result.getOrNull()?.items?.let {
+            result.getOrNull()?.results?.let {
                 _listPopularMovies.postValue(ViewStatePopularMovies.Success(it))
                 it.forEach{ itemPopularFilm ->
                     repository.addOrUpdateLocalePopularFilms(itemPopularFilm)

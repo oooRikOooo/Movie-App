@@ -3,8 +3,7 @@ package com.example.filmshelper.data.dataSources.mainScreen
 import com.example.filmshelper.data.models.nowShowingMovies.ItemNowShowingMovies
 import com.example.filmshelper.data.models.nowShowingMovies.NowShowingMovies
 import com.example.filmshelper.data.models.popularMovies.ItemPopularMovies
-import com.example.filmshelper.data.models.popularMovies.MostPopularMovies
-import com.example.filmshelper.data.room.FilmsDao
+import com.example.filmshelper.data.models.popularMovies.PopularMovies
 import com.example.filmshelper.data.room.FilmsDataBase
 import com.example.filmshelper.domain.dataSources.FilmsDataSource
 import java.io.IOException
@@ -13,8 +12,8 @@ import javax.inject.Inject
 class LocaleDataSourceImpl @Inject constructor(
     private val dataBase: FilmsDataBase
 ) : FilmsDataSource {
-    override suspend fun getPopularFilms(): Result<MostPopularMovies> {
-        val data = MostPopularMovies("okay", dataBase.filmsDao().readAllPopularFilms())
+    override suspend fun getPopularFilms(): Result<PopularMovies> {
+        val data = PopularMovies("okay","query", dataBase.filmsDao().readAllPopularFilms())
 
         return try {
             Result.success(data)
@@ -28,7 +27,7 @@ class LocaleDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getNowShowingFilms(): Result<NowShowingMovies> {
-        val data = NowShowingMovies("okay", dataBase.filmsDao().readAllNowShowingFilms())
+        val data = NowShowingMovies("okay","?groups=now-playing-us&count=5", dataBase.filmsDao().readAllNowShowingFilms())
 
         return try {
             Result.success(data)

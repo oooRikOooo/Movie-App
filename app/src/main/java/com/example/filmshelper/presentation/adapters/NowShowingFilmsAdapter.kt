@@ -20,7 +20,7 @@ class NowShowingFilmsAdapter : RecyclerView.Adapter<NowShowingFilmsAdapter.MainF
         fun bind(item: ItemNowShowingMovies){
             binding.apply {
                 textViewFilmName.text = item.title
-                textViewReleaseDate.text = item.releaseState
+                textViewReleaseDate.text = item.runtimeStr
                 Picasso.get().load(item.image).fit()
                     .centerCrop().into(imageView)
             }

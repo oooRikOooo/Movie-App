@@ -1,4 +1,4 @@
-package com.example.filmshelper.data.models.FilmDetails
+package com.example.filmshelper.data.models.filmDetails
 
 data class Similar(
     val id: String,

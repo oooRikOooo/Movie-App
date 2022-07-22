@@ -23,7 +23,7 @@ class PopularMoviesAdapter : RecyclerView.Adapter<PopularMoviesAdapter.PopularFi
             binding.apply {
                 textViewTitle.text = item.title
                 textViewRating.text = binding.root.context.getString(R.string.rating_imdb, item.imDbRating)
-                textViewYear.text = item.year
+                textViewYear.text = item.description
 
                 Picasso.get().load(item.image).fit()
                     .centerCrop().into(imageView2)

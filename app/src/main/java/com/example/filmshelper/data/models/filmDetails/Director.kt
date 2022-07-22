@@ -1,4 +1,4 @@
-package com.example.filmshelper.data.models.nowShowingMovies
+package com.example.filmshelper.data.models.filmDetails
 
 data class Director(
     val id: String,

@@ -1,4 +1,4 @@
-package com.example.filmshelper.data.models.FilmDetails
+package com.example.filmshelper.data.models.filmDetails
 
 data class FilmDetails(
     val actorList: List<Actor>,

@@ -3,11 +3,11 @@ package com.example.filmshelper.data.repository
 import com.example.filmshelper.data.ApiService
 import com.example.filmshelper.data.dataSources.mainScreen.LocaleDataSourceImpl
 import com.example.filmshelper.data.dataSources.mainScreen.RemoteDataSourceImpl
-import com.example.filmshelper.data.models.FilmDetails.FilmDetails
+import com.example.filmshelper.data.models.filmDetails.FilmDetails
 import com.example.filmshelper.data.models.nowShowingMovies.ItemNowShowingMovies
 import com.example.filmshelper.data.models.nowShowingMovies.NowShowingMovies
 import com.example.filmshelper.data.models.popularMovies.ItemPopularMovies
-import com.example.filmshelper.data.models.popularMovies.MostPopularMovies
+import com.example.filmshelper.data.models.popularMovies.PopularMovies
 import com.example.filmshelper.data.models.youtubeTrailer.YoutubeTrailer
 import com.example.filmshelper.domain.repository.MainScreenRepository
 import okio.IOException
@@ -30,7 +30,7 @@ class MainScreenRepositoryImpl @Inject constructor(
 
     }
 
-    override suspend fun getPopularMovies(): Result<MostPopularMovies> {
+    override suspend fun getPopularMovies(): Result<PopularMovies> {
         val remoteResult = popularMovieRemoteDataSource.getPopularFilms()
         val localeResult = popularMovieLocaleDataSource.getPopularFilms()
 
