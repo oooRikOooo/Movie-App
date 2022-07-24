@@ -1,8 +1,10 @@
-package com.example.filmshelper.data.models.popularMovies
+package com.example.filmshelper.data.models.popular.popularMovies
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.example.filmshelper.data.models.popular.popularMovies.Genre
+import com.example.filmshelper.data.models.popular.popularMovies.Star
 import com.example.filmshelper.utils.PopularFilmsTypeConverters
 import com.google.gson.annotations.SerializedName
 

@@ -6,8 +6,10 @@ import com.example.filmshelper.data.dataSources.mainScreen.RemoteDataSourceImpl
 import com.example.filmshelper.data.models.filmDetails.FilmDetails
 import com.example.filmshelper.data.models.nowShowingMovies.ItemNowShowingMovies
 import com.example.filmshelper.data.models.nowShowingMovies.NowShowingMovies
-import com.example.filmshelper.data.models.popularMovies.ItemPopularMovies
-import com.example.filmshelper.data.models.popularMovies.PopularMovies
+import com.example.filmshelper.data.models.popular.popularMovies.ItemPopularMovies
+import com.example.filmshelper.data.models.popular.popularMovies.PopularMovies
+import com.example.filmshelper.data.models.popular.popularTvShows.ItemPopularTvShows
+import com.example.filmshelper.data.models.popular.popularTvShows.PopularTvShows
 import com.example.filmshelper.data.models.youtubeTrailer.YoutubeTrailer
 import com.example.filmshelper.domain.repository.MainScreenRepository
 import okio.IOException
@@ -62,5 +64,18 @@ class MainScreenRepositoryImpl @Inject constructor(
         } catch (e : IOException){
             Result.failure(e)
         }
+    }
+
+    override suspend fun getPopularTvShow(): Result<PopularTvShows> {
+        val remoteResult = popularMovieRemoteDataSource.getPopularTvShows()
+        val localeResult = popularMovieLocaleDataSource.getPopularTvShows()
+
+        return if (remoteResult.isSuccess){
+            remoteResult
+        } else localeResult
+    }
+
+    override fun addOrUpdateLocalePopularTvShows(tvShow: ItemPopularTvShows) {
+        popularMovieLocaleDataSource.addOrUpdatePopularTvShows(tvShow)
     }
 }

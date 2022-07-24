@@ -15,7 +15,9 @@ import com.example.filmshelper.R
 import com.example.filmshelper.appComponent
 import com.example.filmshelper.databinding.FragmentMainBinding
 import com.example.filmshelper.presentation.adapters.NowShowingFilmsAdapter
-import com.example.filmshelper.presentation.adapters.PopularMoviesAdapter
+import com.example.filmshelper.presentation.adapters.popularAdapter.PopularMoviesAdapter
+import com.example.filmshelper.presentation.adapters.popularAdapter.PopularTvShowsAdapter
+import com.example.filmshelper.utils.ViewStateWithList
 import com.faltenreich.skeletonlayout.applySkeleton
 import javax.inject.Inject
 
@@ -33,6 +35,7 @@ class MainFragment : Fragment() {
 
     private val nowShowingAdapter = NowShowingFilmsAdapter()
     private val popularMoviesAdapter = PopularMoviesAdapter()
+    private val popularTvShowsAdapter = PopularTvShowsAdapter()
 
 
     override fun onAttach(context: Context) {
@@ -49,6 +52,7 @@ class MainFragment : Fragment() {
 
         viewModel.getNowShowingMovies()
         viewModel.getPopularMovies()
+        viewModel.getPopularTvShows()
 
         setupAdapters()
         getDataForAdapter()
@@ -67,7 +71,15 @@ class MainFragment : Fragment() {
         binding.recyclerviewPopular.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
+            isNestedScrollingEnabled = false
             adapter = popularMoviesAdapter
+        }
+
+        binding.recyclerviewPopularTvShows.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(requireContext())
+            isNestedScrollingEnabled = false
+            adapter = popularTvShowsAdapter
         }
     }
 
@@ -78,22 +90,26 @@ class MainFragment : Fragment() {
         val skeletonPopular =
             binding.recyclerviewPopular.applySkeleton(R.layout.now_showing_item_list)
 
+        val skeletonPopularTvShows =
+            binding.recyclerviewPopularTvShows.applySkeleton(R.layout.popular_tv_show_item_list)
+
         skeletonNowShowing.showSkeleton()
         skeletonPopular.showSkeleton()
+        skeletonPopularTvShows.showSkeleton()
 
         viewModel.listNowShowingMovies.observe(viewLifecycleOwner) {
 
             when (it) {
-                is MainFragmentViewModel.ViewStateNowShowingMovies.Error -> {
+                is ViewStateWithList.Error -> {
                     Log.d("riko", "${it.error}")
                 }
-                MainFragmentViewModel.ViewStateNowShowingMovies.Loading -> {
+                ViewStateWithList.Loading -> {
                     Log.d("riko", "Loading")
                 }
-                MainFragmentViewModel.ViewStateNowShowingMovies.NoData -> {
+                ViewStateWithList.NoData -> {
                     Log.d("riko", "NoData")
                 }
-                is MainFragmentViewModel.ViewStateNowShowingMovies.Success -> {
+                is ViewStateWithList.Success -> {
                     nowShowingAdapter.list = it.data
 
                     skeletonNowShowing.showOriginal()
@@ -105,22 +121,42 @@ class MainFragment : Fragment() {
         viewModel.listPopularMovies.observe(viewLifecycleOwner) {
 
             when (it) {
-                is MainFragmentViewModel.ViewStatePopularMovies.Error -> {
+                is ViewStateWithList.Error -> {
                     Toast.makeText(requireContext(), "${it.error}1", Toast.LENGTH_SHORT).show()
                 }
-                MainFragmentViewModel.ViewStatePopularMovies.Loading -> {
+                ViewStateWithList.Loading -> {
 
                 }
-                MainFragmentViewModel.ViewStatePopularMovies.NoData -> {
+                ViewStateWithList.NoData -> {
                     Toast.makeText(requireContext(), "NoData1", Toast.LENGTH_SHORT).show()
                 }
-                is MainFragmentViewModel.ViewStatePopularMovies.Success -> {
+                is ViewStateWithList.Success -> {
                     popularMoviesAdapter.list = it.data
                     skeletonPopular.showOriginal()
                 }
             }
 
         }
+
+        viewModel.listPopularTvShows.observe(viewLifecycleOwner) {
+
+            when (it) {
+                is ViewStateWithList.Error -> {
+                    Toast.makeText(requireContext(), "${it.error}1", Toast.LENGTH_SHORT).show()
+                }
+                ViewStateWithList.Loading -> {
+
+                }
+                ViewStateWithList.NoData -> {
+                    Toast.makeText(requireContext(), "NoData1", Toast.LENGTH_SHORT).show()
+                }
+                is ViewStateWithList.Success -> {
+                    popularTvShowsAdapter.list = it.data
+                    skeletonPopularTvShows.showOriginal()
+                }
+            }
+        }
+
     }
 
 }

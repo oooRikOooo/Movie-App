@@ -13,10 +13,12 @@ import androidx.fragment.app.viewModels
 import com.example.filmshelper.R
 import com.example.filmshelper.appComponent
 import com.example.filmshelper.data.models.FirebaseUserFavouriteFilms
+import com.example.filmshelper.data.models.filmDetails.FilmDetails
 import com.example.filmshelper.databinding.FragmentFilmDetailsBinding
 import com.example.filmshelper.presentation.adapters.CategoriesAdapter
 import com.example.filmshelper.presentation.screens.mainFragment.MainFragmentViewModel
 import com.example.filmshelper.presentation.screens.mainFragment.MainFragmentViewModelFactory
+import com.example.filmshelper.utils.ViewState
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
@@ -78,21 +80,21 @@ class FilmDetailsFragment : Fragment() {
                 if (user != null) {
                     when (viewModel.filmById.value) {
 
-                        is MainFragmentViewModel.ViewStateMovieById.Success -> {
+                        is ViewState.Success -> {
                             val item =
-                                (viewModel.filmById.value as MainFragmentViewModel.ViewStateMovieById.Success)
+                                (viewModel.filmById.value as ViewState.Success)
 
                             //addFavouriteFilm(item)
                             setFavouriteFilmState(item)
 
                         }
-                        is MainFragmentViewModel.ViewStateMovieById.Error -> {
+                        is ViewState.Error -> {
                             Toast.makeText(requireContext(), "Error", Toast.LENGTH_SHORT).show()
                         }
-                        MainFragmentViewModel.ViewStateMovieById.Loading -> {
+                        ViewState.Loading -> {
                             Toast.makeText(requireContext(), "Loading", Toast.LENGTH_SHORT).show()
                         }
-                        MainFragmentViewModel.ViewStateMovieById.NoData -> {
+                        ViewState.NoData -> {
                             Toast.makeText(requireContext(), "No data", Toast.LENGTH_SHORT).show()
                         }
                         null -> {
@@ -107,7 +109,7 @@ class FilmDetailsFragment : Fragment() {
         }
     }
 
-    private fun setFavouriteFilmState(film: MainFragmentViewModel.ViewStateMovieById.Success) {
+    private fun setFavouriteFilmState(film: ViewState.Success<FilmDetails>) {
         database.collection("users").document(user!!.uid)
             .collection("favouriteFilms").get().addOnSuccessListener {
                 val taskList: List<FirebaseUserFavouriteFilms> =
@@ -132,7 +134,7 @@ class FilmDetailsFragment : Fragment() {
     }
 
 
-    private fun removeFavouriteFilm(item: MainFragmentViewModel.ViewStateMovieById.Success) {
+    private fun removeFavouriteFilm(item: ViewState.Success<FilmDetails>) {
         database.collection("users").document(user!!.uid)
             .collection("favouriteFilms").document(item.data.id).delete()
             .addOnSuccessListener {
@@ -146,7 +148,7 @@ class FilmDetailsFragment : Fragment() {
             }
     }
 
-    private fun addFavouriteFilm(item: MainFragmentViewModel.ViewStateMovieById.Success) {
+    private fun addFavouriteFilm(item: ViewState.Success<FilmDetails>) {
 
         val film = FirebaseUserFavouriteFilms(
             item.data.id,
@@ -202,10 +204,10 @@ class FilmDetailsFragment : Fragment() {
         viewModel.filmById.observe(viewLifecycleOwner) {
 
             when (it) {
-                is MainFragmentViewModel.ViewStateMovieById.Error -> {
+                is ViewState.Error -> {
                     Log.d("riko", "${it.error}2")
                 }
-                MainFragmentViewModel.ViewStateMovieById.Loading -> {
+                ViewState.Loading -> {
                     Log.d("riko", "Loading2")
                     setViewAndProgressBarVisibility(
                         binding.nestedScroll, View.INVISIBLE,
@@ -213,10 +215,10 @@ class FilmDetailsFragment : Fragment() {
                     )
 
                 }
-                MainFragmentViewModel.ViewStateMovieById.NoData -> {
+                ViewState.NoData -> {
                     Log.d("riko", "NoData2")
                 }
-                is MainFragmentViewModel.ViewStateMovieById.Success -> {
+                is ViewState.Success -> {
                     binding.apply {
 
                         categoriesAdapter.list = it.data.genreList

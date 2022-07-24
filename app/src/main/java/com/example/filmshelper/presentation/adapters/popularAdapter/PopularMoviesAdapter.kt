@@ -1,4 +1,4 @@
-package com.example.filmshelper.presentation.adapters
+package com.example.filmshelper.presentation.adapters.popularAdapter
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmshelper.R
-import com.example.filmshelper.data.models.popularMovies.ItemPopularMovies
+import com.example.filmshelper.data.models.popular.popularMovies.ItemPopularMovies
 import com.example.filmshelper.databinding.PopularItemListBinding
 import com.squareup.picasso.Picasso
 
@@ -31,10 +31,14 @@ class PopularMoviesAdapter : RecyclerView.Adapter<PopularMoviesAdapter.PopularFi
         }
     }
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularFilmsViewHolder {
-        val binding = PopularItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+       val binding = PopularItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return PopularFilmsViewHolder(binding)
+
+
     }
 
     override fun onBindViewHolder(holder: PopularFilmsViewHolder, position: Int) {
@@ -48,7 +52,10 @@ class PopularMoviesAdapter : RecyclerView.Adapter<PopularMoviesAdapter.PopularFi
         }
     }
 
+
     override fun getItemCount(): Int {
         return list.size
     }
+
+
 }

@@ -2,8 +2,8 @@ package com.example.filmshelper.data
 
 import com.example.filmshelper.data.models.filmDetails.FilmDetails
 import com.example.filmshelper.data.models.nowShowingMovies.NowShowingMovies
-import com.example.filmshelper.data.models.popularMovies.PopularMovies
-import com.example.filmshelper.data.models.popularTvShows.MostPopularTvShows
+import com.example.filmshelper.data.models.popular.popularMovies.PopularMovies
+import com.example.filmshelper.data.models.popular.popularTvShows.PopularTvShows
 import com.example.filmshelper.data.models.youtubeTrailer.YoutubeTrailer
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -26,8 +26,8 @@ interface ApiService {
     @GET("AdvancedSearch/$API_KEY2?title_type=feature&groups=top_100&count=5")
     suspend fun getPopularMovies(): PopularMovies
 
-    @GET("MostPopularTVs/$API_KEY2")
-    suspend fun getPopularTvShows(): MostPopularTvShows
+    @GET("AdvancedSearch/$API_KEY2?title_type=tv_series&count=5")
+    suspend fun getPopularTvShows(): PopularTvShows
 
 
     @GET("Title/$API_KEY2/{id}")

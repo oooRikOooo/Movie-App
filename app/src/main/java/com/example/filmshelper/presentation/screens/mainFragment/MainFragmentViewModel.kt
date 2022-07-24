@@ -1,145 +1,141 @@
 package com.example.filmshelper.presentation.screens.mainFragment
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.filmshelper.data.models.filmDetails.FilmDetails
 import com.example.filmshelper.data.models.nowShowingMovies.ItemNowShowingMovies
-import com.example.filmshelper.data.models.popularMovies.ItemPopularMovies
+import com.example.filmshelper.data.models.popular.popularMovies.ItemPopularMovies
+import com.example.filmshelper.data.models.popular.popularTvShows.ItemPopularTvShows
 import com.example.filmshelper.data.models.youtubeTrailer.YoutubeTrailer
 import com.example.filmshelper.domain.repository.MainScreenRepository
+import com.example.filmshelper.utils.ViewState
+import com.example.filmshelper.utils.ViewStateWithList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 class MainFragmentViewModel @Inject constructor(
     private val repository: MainScreenRepository
 ) : ViewModel() {
 
-    val listNowShowingMovies: LiveData<ViewStateNowShowingMovies>
+    val listNowShowingMovies: LiveData<ViewStateWithList<ItemNowShowingMovies>>
         get() = _listNowShowingMovies
 
-    val listPopularMovies: LiveData<ViewStatePopularMovies>
+    val listPopularMovies: LiveData<ViewStateWithList<ItemPopularMovies>>
         get() = _listPopularMovies
 
-    val filmById: LiveData<ViewStateMovieById>
+    val listPopularTvShows: LiveData<ViewStateWithList<ItemPopularTvShows>>
+        get() = _listPopularTvShows
+
+
+    val filmById: LiveData<ViewState<FilmDetails>>
         get() = _filmById
 
-    val youtubeTrailer: LiveData<ViewStateYoutubeTrailerById>
+    val youtubeTrailer: LiveData<ViewState<YoutubeTrailer>>
         get() = _youtubeTrailer
 
-    private val _listNowShowingMovies = MutableLiveData<ViewStateNowShowingMovies>()
-    private val _listPopularMovies = MutableLiveData<ViewStatePopularMovies>()
-    private val _filmById = MutableLiveData<ViewStateMovieById>()
-    private val _youtubeTrailer = MutableLiveData<ViewStateYoutubeTrailerById>()
+    private val _listNowShowingMovies = MutableLiveData<ViewStateWithList<ItemNowShowingMovies>>()
+    private val _listPopularMovies = MutableLiveData<ViewStateWithList<ItemPopularMovies>>()
+    private val _listPopularTvShows = MutableLiveData<ViewStateWithList<ItemPopularTvShows>>()
+    private val _filmById = MutableLiveData<ViewState<FilmDetails>>()
+    private val _youtubeTrailer = MutableLiveData<ViewState<YoutubeTrailer>>()
 
     fun getNowShowingMovies() = viewModelScope.launch(Dispatchers.IO){
-        _listNowShowingMovies.postValue(ViewStateNowShowingMovies.Loading)
+        _listNowShowingMovies.postValue(ViewStateWithList.Loading)
         val result = repository.getMoviesInTheaters()
 
         if (result.isSuccess){
             result.getOrNull()?.results?.let {
-                _listNowShowingMovies.postValue(ViewStateNowShowingMovies.Success(it))
+                _listNowShowingMovies.postValue(ViewStateWithList.Success(it))
                 it.forEach { itemNowShowingFilm ->
                     repository.addOrUpdateLocaleNowShowingFilms(itemNowShowingFilm)
 
                 }
             } ?: run{
-                _listNowShowingMovies.postValue(ViewStateNowShowingMovies.NoData)
+                _listNowShowingMovies.postValue(ViewStateWithList.NoData)
             }
 
         }
 
         else {
-            _listNowShowingMovies.postValue(ViewStateNowShowingMovies.Error(result.exceptionOrNull()!!))
+            _listNowShowingMovies.postValue(ViewStateWithList.Error(result.exceptionOrNull()!!))
         }
     }
 
     fun getPopularMovies() = viewModelScope.launch(Dispatchers.IO){
-        _listPopularMovies.postValue(ViewStatePopularMovies.Loading)
+        _listPopularMovies.postValue(ViewStateWithList.Loading)
         val result = repository.getPopularMovies()
 
         if (result.isSuccess){
             result.getOrNull()?.results?.let {
-                _listPopularMovies.postValue(ViewStatePopularMovies.Success(it))
+                _listPopularMovies.postValue(ViewStateWithList.Success(it))
                 it.forEach{ itemPopularFilm ->
                     repository.addOrUpdateLocalePopularFilms(itemPopularFilm)
                 }
-            } ?: run{
-                _listPopularMovies.postValue(ViewStatePopularMovies.NoData)
+            } ?: run {
+                _listPopularMovies.postValue(ViewStateWithList.NoData)
             }
 
+        } else {
+            _listPopularMovies.postValue(ViewStateWithList.Error(result.exceptionOrNull()!!))
         }
+    }
 
-        else {
-            _listPopularMovies.postValue(ViewStatePopularMovies.Error(result.exceptionOrNull()!!))
+    fun getPopularTvShows() = viewModelScope.launch(Dispatchers.IO) {
+        _listPopularTvShows.postValue(ViewStateWithList.Loading)
+        val result = repository.getPopularTvShow()
+
+        if (result.isSuccess){
+            result.getOrNull()?.results?.let {
+                _listPopularTvShows.postValue(ViewStateWithList.Success(it))
+                it.forEach { itemPopularTvShows ->
+                    repository.addOrUpdateLocalePopularTvShows(itemPopularTvShows)
+                }
+            } ?: run {
+                _listPopularTvShows.postValue(ViewStateWithList.NoData)
+            }
+        } else {
+            _listPopularTvShows.postValue(ViewStateWithList.Error(result.exceptionOrNull()!!))
         }
     }
 
     fun getMovieById(id: String) = viewModelScope.launch {
-        _filmById.postValue(ViewStateMovieById.Loading)
+        _filmById.postValue(ViewState.Loading)
 
         val result = repository.getMovieById(id)
 
-        if (result.isSuccess){
+        if (result.isSuccess) {
             result.getOrNull()?.let {
-                _filmById.postValue(ViewStateMovieById.Success(it))
-            } ?: run{
-                _filmById.postValue(ViewStateMovieById.NoData)
+                _filmById.postValue(ViewState.Success(it))
+            } ?: run {
+                _filmById.postValue(ViewState.NoData)
             }
         }
 
         else{
-            _filmById.postValue(ViewStateMovieById.Error(result.exceptionOrNull()!!))
+            _filmById.postValue(ViewState.Error(result.exceptionOrNull()!!))
         }
 
     }
 
     fun getYoutubeTrailerById(id: String) = viewModelScope.launch {
-        _youtubeTrailer.postValue(ViewStateYoutubeTrailerById.Loading)
+        _youtubeTrailer.postValue(ViewState.Loading)
 
         val result = repository.getMovieTrailerById(id)
 
         if (result.isSuccess){
             result.getOrNull()?.let {
-                _youtubeTrailer.postValue(ViewStateYoutubeTrailerById.Success(it))
+                _youtubeTrailer.postValue(ViewState.Success(it))
             } ?: run{
-                _youtubeTrailer.postValue(ViewStateYoutubeTrailerById.NoData)
+                _youtubeTrailer.postValue(ViewState.NoData)
             }
         }
 
         else{
-            _youtubeTrailer.postValue(ViewStateYoutubeTrailerById.Error(result.exceptionOrNull()!!))
+            _youtubeTrailer.postValue(ViewState.Error(result.exceptionOrNull()!!))
         }
     }
 
-    sealed class ViewStateNowShowingMovies{
-        data class Success(val data: List<ItemNowShowingMovies>) : ViewStateNowShowingMovies()
-        object NoData: ViewStateNowShowingMovies()
-        object Loading: ViewStateNowShowingMovies()
-        data class Error(val error: Throwable): ViewStateNowShowingMovies()
-    }
 
-    sealed class ViewStatePopularMovies{
-        data class Success(val data: List<ItemPopularMovies>) : ViewStatePopularMovies()
-        object NoData: ViewStatePopularMovies()
-        object Loading: ViewStatePopularMovies()
-        data class Error(val error: Throwable): ViewStatePopularMovies()
-    }
-
-    sealed class ViewStateMovieById{
-        data class Success(val data: FilmDetails) : ViewStateMovieById()
-        object NoData: ViewStateMovieById()
-        object Loading: ViewStateMovieById()
-        data class Error(val error: Throwable): ViewStateMovieById()
-    }
-
-    sealed class ViewStateYoutubeTrailerById{
-        data class Success(val data: YoutubeTrailer) : ViewStateYoutubeTrailerById()
-        object NoData: ViewStateYoutubeTrailerById()
-        object Loading: ViewStateYoutubeTrailerById()
-        data class Error(val error: Throwable): ViewStateYoutubeTrailerById()
-    }
 
 }

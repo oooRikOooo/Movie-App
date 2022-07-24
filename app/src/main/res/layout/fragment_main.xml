@@ -71,7 +71,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/roboto_bold"
-                android:text="@string/popular"
+                android:text="@string/popular_movies"
                 android:textColor="@color/now_showing_films"
                 android:textSize="25sp"
                 app:layout_constraintBottom_toTopOf="@+id/recyclerviewPopular"
@@ -104,6 +104,49 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewPopular"
                 tools:listitem="@layout/popular_item_list">
+
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/textViewPopularTvShows"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/popular_tv_shows"
+                android:textColor="@color/now_showing_films"
+                android:textSize="25sp"
+                app:layout_constraintBottom_toTopOf="@id/recyclerviewPopularTvShows"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerviewPopular" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonSeeMorePopularTvShows"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginStart="30dp"
+                android:fontFamily="@font/roboto_light"
+                android:text="@string/see_more"
+                android:textColor="@color/grey"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/button_see_more"
+                app:layout_constraintBottom_toTopOf="@id/recyclerviewPopularTvShows"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recyclerviewPopular"  />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerviewPopularTvShows"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewPopularTvShows"
+                tools:listitem="@layout/popular_tv_show_item_list">
 
 
             </androidx.recyclerview.widget.RecyclerView>

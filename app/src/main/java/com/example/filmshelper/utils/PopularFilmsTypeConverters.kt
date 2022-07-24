@@ -1,8 +1,8 @@
 package com.example.filmshelper.utils
 
 import androidx.room.TypeConverter
-import com.example.filmshelper.data.models.popularMovies.Genre
-import com.example.filmshelper.data.models.popularMovies.Star
+import com.example.filmshelper.data.models.popular.popularMovies.Genre
+import com.example.filmshelper.data.models.popular.popularMovies.Star
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

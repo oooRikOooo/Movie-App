@@ -35,4 +35,6 @@
     <string name="update">Update</string>
     <string name="change_profile_picture">Change Profile Picture</string>
     <string name="favourites">Favourites</string>
+    <string name="popular_tv_shows">Popular Tv Shows</string>
+    <string name="popular_movies">Popular Movies</string>
 </resources>

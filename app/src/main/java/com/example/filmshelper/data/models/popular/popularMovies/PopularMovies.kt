@@ -1,4 +1,5 @@
-package com.example.filmshelper.data.models.popularMovies
+package com.example.filmshelper.data.models.popular.popularMovies
+
 
 data class PopularMovies(
     val errorMessage: Any,

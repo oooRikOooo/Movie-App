@@ -5,7 +5,8 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.filmshelper.data.models.nowShowingMovies.ItemNowShowingMovies
-import com.example.filmshelper.data.models.popularMovies.ItemPopularMovies
+import com.example.filmshelper.data.models.popular.popularMovies.ItemPopularMovies
+import com.example.filmshelper.data.models.popular.popularTvShows.ItemPopularTvShows
 
 
 @Dao
@@ -22,4 +23,10 @@ interface FilmsDao {
 
     @Query("SELECT * FROM now_showing_movies_table")
     fun readAllNowShowingFilms() : List<ItemNowShowingMovies>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun addOrUpdatePopularTvShows(tvShow: ItemPopularTvShows)
+
+    @Query("SELECT * FROM popular_tv_shows_table")
+    fun readAllPopularTvShows(): List<ItemPopularTvShows>
 }

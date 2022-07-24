@@ -1,12 +1,12 @@
 package com.example.filmshelper.utils
 
 import androidx.room.TypeConverter
-import com.example.filmshelper.data.models.nowShowingMovies.Genre
-import com.example.filmshelper.data.models.nowShowingMovies.Star
+import com.example.filmshelper.data.models.popular.popularTvShows.Genre
+import com.example.filmshelper.data.models.popular.popularTvShows.Star
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class NowShowingFilmsTypeConverters {
+class PopularTvShowsTypeConverters {
 
     @TypeConverter
     fun fromListGenreToJSON(genreList: List<Genre>): String {
@@ -19,7 +19,7 @@ class NowShowingFilmsTypeConverters {
     }
 
     @TypeConverter
-    fun fromListStarToJSON(starList: List<Star>): String {
+    fun fromListStarToJSON(starList: List<Star>?): String {
         return Gson().toJson(starList)
     }
 
