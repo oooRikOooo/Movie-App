@@ -1,11 +1,15 @@
 package com.example.filmshelper.presentation.adapters
 
+import android.util.Log
+import com.example.filmshelper.R
 import com.example.filmshelper.data.models.DisplayableItem
 import com.example.filmshelper.data.models.filmDetails.Actor
 import com.example.filmshelper.data.models.filmDetails.CreatorList
 import com.example.filmshelper.data.models.filmDetails.Director
+import com.example.filmshelper.data.models.filmDetails.Similar
 import com.example.filmshelper.databinding.CastItemListBinding
 import com.example.filmshelper.databinding.CreatorsListItemBinding
+import com.example.filmshelper.databinding.SimilarItemListBinding
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.squareup.picasso.Picasso
 
@@ -18,7 +22,7 @@ class AdapterDelegatesDetails {
             bind {
                 binding.apply {
                     textViewActorName.text = item.name
-                    textViewCharacter.text = item.asCharacter
+                    textViewCharacter.text = binding.root.context.getString(R.string.cast)
                     Picasso.get().load(item.image).fit()
                         .centerCrop().into(imageView3)
                 }
@@ -32,7 +36,7 @@ class AdapterDelegatesDetails {
             bind {
                 binding.apply {
                     textViewActorName.text = item.name
-                    textViewCharacter.text = "Director"
+                    textViewCharacter.text = binding.root.context.getString(R.string.director)
                 }
             }
         }
@@ -44,7 +48,21 @@ class AdapterDelegatesDetails {
             bind {
                 binding.apply {
                     textViewActorName.text = item.name
-                    textViewCharacter.text = "Director"
+                    textViewCharacter.text = binding.root.context.getString(R.string.director)
+                }
+            }
+        }
+
+    fun similarFilmsAdapterDelegate() =
+        adapterDelegateViewBinding<Similar, DisplayableItem, SimilarItemListBinding>(
+            { layoutInflater, root -> SimilarItemListBinding.inflate(layoutInflater, root, false) }
+        ) {
+            bind {
+                Log.d("riko", it.size.toString())
+                binding.apply {
+                    textViewTitle.text = item.title
+                    Picasso.get().load(item.image).fit()
+                        .centerCrop().into(imageView4)
                 }
             }
         }

@@ -55,6 +55,9 @@ class FilmDetailsFragment : Fragment() {
         AdapterDelegatesDetails().castDirectorsAdapterDelegate(),
         AdapterDelegatesDetails().castActorsAdapterDelegate()
     )
+    private val similarAdapter = ListDelegationAdapter(
+        AdapterDelegatesDetails().similarFilmsAdapterDelegate()
+    )
 
     override fun onAttach(context: Context) {
         context.appComponent.inject(this)
@@ -240,6 +243,7 @@ class FilmDetailsFragment : Fragment() {
                         commonList.addAll(it.data.actorList)
                         //commonList.addAll(it.data.directorList)
                         castAdapter.items = commonList
+                        similarAdapter.items = it.data.similars
                         categoriesAdapter.list = it.data.genreList
                         setData(it)
 
@@ -303,6 +307,13 @@ class FilmDetailsFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
             isNestedScrollingEnabled = false
             adapter = castAdapter
+        }
+
+        binding.recyclerViewSimilar.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            isNestedScrollingEnabled = false
+            adapter = similarAdapter
         }
 
 

@@ -30,15 +30,6 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:toolbarId="@+id/toolbar">
 
-                <!--<com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-                    android:id="@+id/youtube_player"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    app:autoPlay="false"
-
-                    app:layout_collapseMode="parallax"
-                     />-->
-
                 <ImageView
                     android:id="@+id/mainImageView"
                     android:layout_width="match_parent"
@@ -245,7 +236,25 @@
                         android:layout_marginTop="20dp"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/cast_item_list"/>
+                        tools:listitem="@layout/cast_item_list" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/similar"
+                        android:layout_marginTop="20dp"
+                        android:textSize="20sp"
+                        android:textColor="@color/black_white"
+                        android:fontFamily="@font/roboto_medium" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_similar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/similar_item_list" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

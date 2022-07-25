@@ -37,4 +37,7 @@
     <string name="favourites">Favourites</string>
     <string name="popular_tv_shows">Popular Tv Shows</string>
     <string name="popular_movies">Popular Movies</string>
+    <string name="cast">Cast</string>
+    <string name="director">Director</string>
+    <string name="similar">Similar</string>
 </resources>
