@@ -14,11 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.filmshelper.R
 import com.example.filmshelper.appComponent
 import com.example.filmshelper.databinding.FragmentMainBinding
-import com.example.filmshelper.presentation.adapters.NowShowingFilmsAdapter
-import com.example.filmshelper.presentation.adapters.popularAdapter.PopularMoviesAdapter
-import com.example.filmshelper.presentation.adapters.popularAdapter.PopularTvShowsAdapter
+import com.example.filmshelper.presentation.adapters.AdapterDelegatesHome
 import com.example.filmshelper.utils.ViewStateWithList
 import com.faltenreich.skeletonlayout.applySkeleton
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import javax.inject.Inject
 
 
@@ -33,9 +32,15 @@ class MainFragment : Fragment() {
     @Inject
     lateinit var factory: MainFragmentViewModelFactory.Factory
 
-    private val nowShowingAdapter = NowShowingFilmsAdapter()
-    private val popularMoviesAdapter = PopularMoviesAdapter()
-    private val popularTvShowsAdapter = PopularTvShowsAdapter()
+    private val nowShowingAdapter = ListDelegationAdapter(
+        AdapterDelegatesHome().nowShowingFilmsAdapterDelegate()
+    )
+    private val popularMoviesAdapter = ListDelegationAdapter(
+        AdapterDelegatesHome().popularFilmsAdapterDelegate()
+    )
+    private val popularTvShowsAdapter = ListDelegationAdapter(
+        AdapterDelegatesHome().popularTvShowsAdapterDelegate()
+    )
 
 
     override fun onAttach(context: Context) {
@@ -59,6 +64,7 @@ class MainFragment : Fragment() {
 
         return binding.root
     }
+
 
     private fun setupAdapters() {
 
@@ -110,7 +116,7 @@ class MainFragment : Fragment() {
                     Log.d("riko", "NoData")
                 }
                 is ViewStateWithList.Success -> {
-                    nowShowingAdapter.list = it.data
+                    nowShowingAdapter.items = it.data
 
                     skeletonNowShowing.showOriginal()
                 }
@@ -131,7 +137,7 @@ class MainFragment : Fragment() {
                     Toast.makeText(requireContext(), "NoData1", Toast.LENGTH_SHORT).show()
                 }
                 is ViewStateWithList.Success -> {
-                    popularMoviesAdapter.list = it.data
+                    popularMoviesAdapter.items = it.data
                     skeletonPopular.showOriginal()
                 }
             }
@@ -151,7 +157,7 @@ class MainFragment : Fragment() {
                     Toast.makeText(requireContext(), "NoData1", Toast.LENGTH_SHORT).show()
                 }
                 is ViewStateWithList.Success -> {
-                    popularTvShowsAdapter.list = it.data
+                    popularTvShowsAdapter.items = it.data
                     skeletonPopularTvShows.showOriginal()
                 }
             }

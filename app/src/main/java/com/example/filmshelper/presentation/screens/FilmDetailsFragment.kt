@@ -10,11 +10,15 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.filmshelper.R
 import com.example.filmshelper.appComponent
+import com.example.filmshelper.data.models.DisplayableItem
 import com.example.filmshelper.data.models.FirebaseUserFavouriteFilms
 import com.example.filmshelper.data.models.filmDetails.FilmDetails
 import com.example.filmshelper.databinding.FragmentFilmDetailsBinding
+import com.example.filmshelper.presentation.adapters.AdapterDelegatesDetails
 import com.example.filmshelper.presentation.adapters.CategoriesAdapter
 import com.example.filmshelper.presentation.screens.mainFragment.MainFragmentViewModel
 import com.example.filmshelper.presentation.screens.mainFragment.MainFragmentViewModelFactory
@@ -26,6 +30,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
 
@@ -45,6 +50,11 @@ class FilmDetailsFragment : Fragment() {
     lateinit var factory: MainFragmentViewModelFactory.Factory
 
     private val categoriesAdapter = CategoriesAdapter()
+    private val castAdapter = ListDelegationAdapter(
+        AdapterDelegatesDetails().castCreatorsAdapterDelegate(),
+        AdapterDelegatesDetails().castDirectorsAdapterDelegate(),
+        AdapterDelegatesDetails().castActorsAdapterDelegate()
+    )
 
     override fun onAttach(context: Context) {
         context.appComponent.inject(this)
@@ -55,7 +65,6 @@ class FilmDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
 
         binding = FragmentFilmDetailsBinding.inflate(layoutInflater, container, false)
 
@@ -221,23 +230,18 @@ class FilmDetailsFragment : Fragment() {
                 is ViewState.Success -> {
                     binding.apply {
 
+                        val type = requireArguments().getString("type")
+
+                        val commonList = mutableListOf<DisplayableItem>()
+                        if (type == "film") {
+                            commonList.addAll(it.data.directorList)
+                        } else if (type == "tvShow")
+                            commonList.addAll(it.data.tvSeriesInfo.creatorList)
+                        commonList.addAll(it.data.actorList)
+                        //commonList.addAll(it.data.directorList)
+                        castAdapter.items = commonList
                         categoriesAdapter.list = it.data.genreList
-                        textViewFilmTitle.text = it.data.title
-                        textViewRatingImdb.text =
-                            requireContext().getString(R.string.rating_imdb, it.data.imDbRating)
-                        textViewLength.text = it.data.runtimeMins
-                        Picasso.get().load(it.data.image).noFade().fit().centerCrop().into(mainImageView)
-                        if (it.data.languages.contains(",")) {
-
-                            val kept: String =
-                                it.data.languages.substring(0, it.data.languages.indexOf(","))
-                            textViewLanguage.text = kept
-
-                        } else textViewLanguage.text = it.data.languages
-
-                        textViewContentRating.text = it.data.contentRating
-                        textViewDescription.text = it.data.plot
-
+                        setData(it)
 
                     }
                     setViewAndProgressBarVisibility(
@@ -251,6 +255,26 @@ class FilmDetailsFragment : Fragment() {
 
         }
 
+    }
+
+    private fun setData(it: ViewState.Success<FilmDetails>) {
+        binding.apply {
+            textViewFilmTitle.text = it.data.title
+            textViewRatingImdb.text =
+                requireContext().getString(R.string.rating_imdb, it.data.imDbRating)
+            textViewLength.text = it.data.runtimeMins
+            Picasso.get().load(it.data.image).noFade().fit().centerCrop().into(mainImageView)
+            if (it.data.languages.contains(",")) {
+
+                val kept: String =
+                    it.data.languages.substring(0, it.data.languages.indexOf(","))
+                textViewLanguage.text = kept
+
+            } else textViewLanguage.text = it.data.languages
+
+            textViewContentRating.text = it.data.contentRating
+            textViewDescription.text = it.data.plot
+        }
     }
 
     private fun setViewAndProgressBarVisibility(
@@ -272,6 +296,13 @@ class FilmDetailsFragment : Fragment() {
             layoutManager.justifyContent = JustifyContent.FLEX_END
 
             adapter = categoriesAdapter
+        }
+
+        binding.recyclerViewCast.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            isNestedScrollingEnabled = false
+            adapter = castAdapter
         }
 
 

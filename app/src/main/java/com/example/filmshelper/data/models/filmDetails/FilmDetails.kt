@@ -42,7 +42,7 @@ data class FilmDetails(
     val title: String,
     val trailer: Any,
     val tvEpisodeInfo: Any,
-    val tvSeriesInfo: Any,
+    val tvSeriesInfo: TvSeriesInfo,
     val type: String,
     val wikipedia: Any,
     val writerList: List<Writer>,

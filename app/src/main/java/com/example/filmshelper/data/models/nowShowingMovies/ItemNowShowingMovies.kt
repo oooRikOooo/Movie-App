@@ -3,6 +3,7 @@ package com.example.filmshelper.data.models.nowShowingMovies
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.example.filmshelper.data.models.DisplayableItem
 import com.example.filmshelper.utils.NowShowingFilmsTypeConverters
 import com.google.gson.annotations.SerializedName
 
@@ -26,4 +27,4 @@ data class ItemNowShowingMovies(
     val starList: List<Star>,
     val stars: String,
     val title: String
-)
+) : DisplayableItem

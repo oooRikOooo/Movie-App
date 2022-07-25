@@ -37,8 +37,10 @@
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout-night/activity_main.xml" value="0.358695652173913" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout-night/fragment_main.xml" value="0.358695652173913" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/cast_item_list.xml" value="0.3111413043478261" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/category_list_item.xml" value="0.75" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/child_list_view.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/creators_list_item.xml" value="0.3111413043478261" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/edit_profile_cardview.xml" value="0.3111413043478261" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/favourite_movies_cardview.xml" value="0.3111413043478261" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/fragment_edit_profile.xml" value="0.3111413043478261" />

@@ -3,8 +3,7 @@ package com.example.filmshelper.data.models.popular.popularTvShows
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.example.filmshelper.data.models.popular.popularTvShows.Genre
-import com.example.filmshelper.data.models.popular.popularTvShows.Star
+import com.example.filmshelper.data.models.DisplayableItem
 import com.example.filmshelper.utils.PopularTvShowsTypeConverters
 import com.google.gson.annotations.SerializedName
 
@@ -20,4 +19,4 @@ data class ItemPopularTvShows(
     val image: String?,
     val runtimeStr: String?,
     val title: String?
-)
+) : DisplayableItem
