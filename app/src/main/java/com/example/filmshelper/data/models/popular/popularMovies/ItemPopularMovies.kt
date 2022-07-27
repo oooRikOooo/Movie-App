@@ -1,13 +1,14 @@
 package com.example.filmshelper.data.models.popular.popularMovies
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.example.filmshelper.data.models.DisplayableItem
 import com.example.filmshelper.utils.PopularFilmsTypeConverters
 import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "popular_films_table")
+@Entity(tableName = "popular_films_table", indices = [Index(value = ["title"], unique = true)])
 @TypeConverters(PopularFilmsTypeConverters::class)
 data class ItemPopularMovies(
     @PrimaryKey(autoGenerate = true)

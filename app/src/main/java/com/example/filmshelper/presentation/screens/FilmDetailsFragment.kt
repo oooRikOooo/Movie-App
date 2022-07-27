@@ -26,6 +26,7 @@ import com.example.filmshelper.utils.ViewState
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -74,13 +75,15 @@ class FilmDetailsFragment : Fragment() {
         val filmId = requireArguments().getString("filmId")
 
         viewModel.getMovieById(filmId.toString())
-        viewModel.getYoutubeTrailerById(filmId.toString())
+        //viewModel.getYoutubeTrailerById(filmId.toString())
         if (user != null){
             isFilmFavourite(filmId!!)
         }
         setOnClickListeners()
         setupAdapter()
         getData()
+
+
 
         return binding.root
     }
@@ -151,6 +154,7 @@ class FilmDetailsFragment : Fragment() {
             .collection("favouriteFilms").document(item.data.id).delete()
             .addOnSuccessListener {
                 binding.imageButtonFavourites.setImageResource(R.drawable.ic_baseline_favorite_not_pressed_24)
+                Snackbar.make(binding.root, "Removed favourite film", Snackbar.LENGTH_SHORT).show()
             }.addOnFailureListener {
                 Toast.makeText(
                     requireContext(),
@@ -171,12 +175,8 @@ class FilmDetailsFragment : Fragment() {
         database.collection("users").document(user!!.uid)
             .collection("favouriteFilms")
             .document(film.id).set(film).addOnSuccessListener {
-                Toast.makeText(
-                    requireContext(),
-                    "Added successfully",
-                    Toast.LENGTH_SHORT
-                ).show()
                 binding.imageButtonFavourites.setImageResource(R.drawable.ic_baseline_favorite_24)
+                Snackbar.make(binding.root, "Added favourite film", Snackbar.LENGTH_SHORT).show()
             }.addOnFailureListener {
                 Toast.makeText(
                     requireContext(),

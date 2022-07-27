@@ -23,22 +23,22 @@ class MainScreenRepositoryImpl @Inject constructor(
 
     override suspend fun getMoviesInTheaters(): Result<NowShowingMovies> {
 
-        val remoteResult = popularMovieRemoteDataSource.getNowShowingFilms()
+        //val remoteResult = popularMovieRemoteDataSource.getNowShowingFilms()
         val localeResult = popularMovieLocaleDataSource.getNowShowingFilms()
 
-        return if (remoteResult.isSuccess){
-            remoteResult
-        } else localeResult
+        return if (localeResult.isSuccess) {
+            localeResult
+        } else popularMovieRemoteDataSource.getNowShowingFilms()
 
     }
 
     override suspend fun getPopularMovies(): Result<PopularMovies> {
-        val remoteResult = popularMovieRemoteDataSource.getPopularFilms()
+        //val remoteResult = popularMovieRemoteDataSource.getPopularFilms()
         val localeResult = popularMovieLocaleDataSource.getPopularFilms()
 
-        return if (remoteResult.isSuccess){
-            remoteResult
-        } else localeResult
+        return if (localeResult.isSuccess) {
+            localeResult
+        } else popularMovieRemoteDataSource.getPopularFilms()
 
     }
 
@@ -67,12 +67,12 @@ class MainScreenRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getPopularTvShow(): Result<PopularTvShows> {
-        val remoteResult = popularMovieRemoteDataSource.getPopularTvShows()
+        //val remoteResult = popularMovieRemoteDataSource.getPopularTvShows()
         val localeResult = popularMovieLocaleDataSource.getPopularTvShows()
 
-        return if (remoteResult.isSuccess){
-            remoteResult
-        } else localeResult
+        return if (localeResult.isSuccess) {
+            localeResult
+        } else popularMovieRemoteDataSource.getPopularTvShows()
     }
 
     override fun addOrUpdateLocalePopularTvShows(tvShow: ItemPopularTvShows) {

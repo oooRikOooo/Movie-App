@@ -18,7 +18,9 @@ class LocaleDataSourceImpl @Inject constructor(
         val data = PopularMovies("okay","query", dataBase.filmsDao().readAllPopularFilms())
 
         return try {
-            Result.success(data)
+            if (data.results.isNotEmpty()) {
+                Result.success(data)
+            } else throw IOException()
         } catch (e : IOException){
             Result.failure(e)
         }
@@ -32,7 +34,9 @@ class LocaleDataSourceImpl @Inject constructor(
         val data = NowShowingMovies("okay","?groups=now-playing-us&count=5", dataBase.filmsDao().readAllNowShowingFilms())
 
         return try {
-            Result.success(data)
+            if (data.results.isNotEmpty()) {
+                Result.success(data)
+            } else throw IOException()
         } catch (e : IOException){
             Result.failure(e)
         }
@@ -42,7 +46,10 @@ class LocaleDataSourceImpl @Inject constructor(
         val data = PopularTvShows("okay", "?title_type=tv_series&count=5", dataBase.filmsDao().readAllPopularTvShows())
 
         return try {
-            Result.success(data)
+            if (data.results.isNotEmpty()) {
+                Result.success(data)
+            } else throw IOException()
+
         } catch (e: IOException){
             Result.failure(e)
         }

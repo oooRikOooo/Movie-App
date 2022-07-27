@@ -2,11 +2,9 @@ package com.example.filmshelper.presentation.screens.mainFragment
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +15,7 @@ import com.example.filmshelper.databinding.FragmentMainBinding
 import com.example.filmshelper.presentation.adapters.AdapterDelegatesHome
 import com.example.filmshelper.utils.ViewStateWithList
 import com.faltenreich.skeletonlayout.applySkeleton
+import com.google.android.material.snackbar.Snackbar
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
 import javax.inject.Inject
 
@@ -61,8 +60,20 @@ class MainFragment : Fragment() {
 
         setupAdapters()
         getDataForAdapter()
+        setOnClickListeners()
 
         return binding.root
+    }
+
+    private fun setOnClickListeners() {
+        binding.apply {
+            swipeRefreshLayout.setOnRefreshListener {
+                swipeRefreshLayout.isRefreshing = false
+                viewModel.getNowShowingMovies()
+                viewModel.getPopularMovies()
+                viewModel.getPopularTvShows()
+            }
+        }
     }
 
 
@@ -94,7 +105,7 @@ class MainFragment : Fragment() {
             binding.recyclerviewNowShowing.applySkeleton(R.layout.now_showing_item_list)
 
         val skeletonPopular =
-            binding.recyclerviewPopular.applySkeleton(R.layout.now_showing_item_list)
+            binding.recyclerviewPopular.applySkeleton(R.layout.popular_item_list)
 
         val skeletonPopularTvShows =
             binding.recyclerviewPopularTvShows.applySkeleton(R.layout.popular_tv_show_item_list)
@@ -107,13 +118,14 @@ class MainFragment : Fragment() {
 
             when (it) {
                 is ViewStateWithList.Error -> {
-                    Log.d("riko", "${it.error}")
+                    skeletonNowShowing.showOriginal()
+                    Snackbar.make(binding.root, "No internet connection", Snackbar.LENGTH_SHORT)
+                        .show()
                 }
                 ViewStateWithList.Loading -> {
-                    Log.d("riko", "Loading")
                 }
                 ViewStateWithList.NoData -> {
-                    Log.d("riko", "NoData")
+                    skeletonNowShowing.showOriginal()
                 }
                 is ViewStateWithList.Success -> {
                     nowShowingAdapter.items = it.data
@@ -128,13 +140,15 @@ class MainFragment : Fragment() {
 
             when (it) {
                 is ViewStateWithList.Error -> {
-                    Toast.makeText(requireContext(), "${it.error}1", Toast.LENGTH_SHORT).show()
+                    skeletonPopular.showOriginal()
+                    Snackbar.make(binding.root, "No internet connection", Snackbar.LENGTH_SHORT)
+                        .show()
                 }
                 ViewStateWithList.Loading -> {
 
                 }
                 ViewStateWithList.NoData -> {
-                    Toast.makeText(requireContext(), "NoData1", Toast.LENGTH_SHORT).show()
+                    skeletonPopular.showOriginal()
                 }
                 is ViewStateWithList.Success -> {
                     popularMoviesAdapter.items = it.data
@@ -148,13 +162,15 @@ class MainFragment : Fragment() {
 
             when (it) {
                 is ViewStateWithList.Error -> {
-                    Toast.makeText(requireContext(), "${it.error}1", Toast.LENGTH_SHORT).show()
+                    skeletonPopularTvShows.showOriginal()
+                    Snackbar.make(binding.root, "No internet connection", Snackbar.LENGTH_SHORT)
+                        .show()
                 }
                 ViewStateWithList.Loading -> {
 
                 }
                 ViewStateWithList.NoData -> {
-                    Toast.makeText(requireContext(), "NoData1", Toast.LENGTH_SHORT).show()
+                    skeletonPopularTvShows.showOriginal()
                 }
                 is ViewStateWithList.Success -> {
                     popularTvShowsAdapter.items = it.data
@@ -162,6 +178,7 @@ class MainFragment : Fragment() {
                 }
             }
         }
+
 
     }
 
