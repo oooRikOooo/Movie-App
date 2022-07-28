@@ -1,11 +1,10 @@
 package com.example.filmshelper.di
 
-import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import androidx.work.ListenableWorker
-import androidx.work.WorkerFactory
 import com.example.filmshelper.MainActivity
+import com.example.filmshelper.MainApp
 import com.example.filmshelper.data.ApiService
 import com.example.filmshelper.data.dataSources.mainScreen.LocaleDataSourceImpl
 import com.example.filmshelper.data.dataSources.mainScreen.RemoteDataSourceImpl
@@ -20,7 +19,6 @@ import com.example.filmshelper.presentation.screens.LocationFragment
 import com.example.filmshelper.presentation.screens.SearchFragment
 import com.example.filmshelper.presentation.screens.mainFragment.MainFragment
 import com.example.filmshelper.presentation.screens.mainFragment.updateDataWorker.UpdateDataWorker
-import com.example.filmshelper.presentation.screens.mainFragment.updateDataWorker.UpdateDataWorkerFactory
 import com.example.filmshelper.presentation.screens.profileFragments.*
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.inject.assisted.dagger2.AssistedModule
@@ -36,7 +34,7 @@ import kotlin.reflect.KClass
 interface AppComponent {
 
     fun inject(activity: MainActivity)
-    fun inject(application: Application)
+    fun inject(application: MainApp)
     fun inject(fragment: MainFragment)
     fun inject(fragment: SearchFragment)
     fun inject(fragment: LocationFragment)
@@ -87,10 +85,10 @@ interface WorkManagerModule {
     @Binds
     @IntoMap
     @WorkerKey(UpdateDataWorker::class)
-    fun bindsUpdateDataWorker(factory: UpdateDataWorker.Factory): UpdateDataWorker.CustomWorkerFactory
+    fun bindsUpdateDataWorker(factory: UpdateDataWorker.Factory): UpdateDataWorker.ChildWorkerFactory
 
-    @Binds
-    fun bindsWorkerFactory(factory: UpdateDataWorkerFactory): WorkerFactory
+    /*@Binds
+    fun bindsWorkerFactory(factory: UpdateDataWorkerFactory): WorkerFactory*/
 
 }
 

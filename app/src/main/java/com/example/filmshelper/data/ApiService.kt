@@ -14,21 +14,21 @@ private const val API_KEY1 = "k_zvyokdrf"
 
 interface ApiService {
 
-    @GET("AdvancedSearch/$API_KEY1?groups=now-playing-us&count=5")
+    @GET("AdvancedSearch/$API_KEY2?groups=now-playing-us&count=4")
     suspend fun getMoviesInTheaters(): NowShowingMovies
 
-    @GET("AdvancedSearch/$API_KEY1?title_type=feature&groups=top_100&count=5")
+    @GET("AdvancedSearch/$API_KEY2?title_type=feature&groups=top_100&count=5")
     suspend fun getPopularMovies(): PopularMovies
 
-    @GET("AdvancedSearch/$API_KEY1?title_type=tv_series&count=5")
+    @GET("AdvancedSearch/$API_KEY2?title_type=tv_series&count=5")
     suspend fun getPopularTvShows(): PopularTvShows
 
-    @GET("Title/$API_KEY1/{id}")
+    @GET("Title/$API_KEY2/{id}")
     suspend fun getMovieById(
        @Path("id") id:String
     ): FilmDetails
 
-    @GET("YouTubeTrailer/$API_KEY1/{id}")
+    @GET("YouTubeTrailer/$API_KEY2/{id}")
     suspend fun getMovieTrailerById(
         @Path("id") id: String
     ): YoutubeTrailer

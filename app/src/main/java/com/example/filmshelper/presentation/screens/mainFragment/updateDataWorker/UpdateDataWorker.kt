@@ -4,57 +4,108 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
-import androidx.work.Data
-import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.example.filmshelper.R
 import com.example.filmshelper.data.ApiService
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
+import com.example.filmshelper.data.room.FilmsDataBase
+import javax.inject.Inject
 
 
 const val channelId = "channel1"
 
-class UpdateDataWorker @AssistedInject constructor(
-    @Assisted private val context: Context,
-    @Assisted private val workerParams: WorkerParameters,
-    private val apiService: ApiService
+class UpdateDataWorker @Inject constructor(
+    private val context: Context,
+    private val workerParams: WorkerParameters,
+    private val apiService: ApiService,
+    private val dataBase: FilmsDataBase
 ) : CoroutineWorker(context, workerParams) {
-
-    /*@Inject
-    lateinit var apiService: ApiService*/
 
     override suspend fun doWork(): Result {
 
-        val data = apiService.getPopularMovies()
+        val nowShowingFilmsState = updateNowShowingFilms()
+        val popularFilmsState = updatePopularFilms()
+        val popularTvShowsState = updatePopularTvShows()
+        if (popularFilmsState && nowShowingFilmsState && popularTvShowsState) {
+            sendNotification("Data Successfully Updated")
+        } else {
+            sendNotification("Data Not Updated")
+            return Result.retry()
+        }
 
-        if (data.errorMessage.toString().isEmpty()) {
-            sendNotification(data.results.size.toString())
-        } else return Result.retry()
+        return Result.success()
+    }
 
-        Log.d("riko", "working")
+    private suspend fun updatePopularFilms(): Boolean {
+        val isSuccessful = dataBase.filmsDao().deleteAllPopularFilms()
+        val popularMovies = apiService.getPopularMovies()
+        return if (isSuccessful == 0) {
+            false
+        } else {
+            popularMovies.results.forEach {
+                dataBase.filmsDao().addOrUpdatePopularFilms(it)
+            }
 
-        return Result.success(Data.Builder().putString("key", "key").build())
+            val list = dataBase.filmsDao().readAllPopularFilms()
+
+            list.isNotEmpty()
+
+        }
+
+    }
+
+    private suspend fun updateNowShowingFilms(): Boolean {
+        val isSuccessful = dataBase.filmsDao().deleteAllNowShowingFilms()
+        val nowShowingFilms = apiService.getMoviesInTheaters()
+        return if (isSuccessful == 0) {
+            false
+        } else {
+            nowShowingFilms.results.forEach {
+                dataBase.filmsDao().addOrUpdateNowShowingFilms(it)
+            }
+
+            val list = dataBase.filmsDao().readAllNowShowingFilms()
+
+            list.isNotEmpty()
+
+        }
+
+    }
+
+    private suspend fun updatePopularTvShows(): Boolean {
+        val isSuccessful = dataBase.filmsDao().deleteAllPopularTvShows()
+        val popularTvShows = apiService.getPopularTvShows()
+        return if (isSuccessful == 0) {
+            false
+        } else {
+            popularTvShows.results.forEach {
+                dataBase.filmsDao().addOrUpdatePopularTvShows(it)
+            }
+
+            val list = dataBase.filmsDao().readAllPopularTvShows()
+
+            list.isNotEmpty()
+
+        }
+
     }
 
     private fun sendNotification(data: String) {
 
-        val CHANNEL_ID = "channel_name" // The id of the channel.
+        val CHANNEL_ID = "channel_name"
 
         val notificationBuilder: NotificationCompat.Builder =
             NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("dawda")
-                .setContentText("Size: $data")
+                .setContentTitle("Data Update")
+                .setContentText(data)
                 .setAutoCancel(false)
 
         val notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name: CharSequence = "Channel Name" // The user-visible name of the channel.
+            val name: CharSequence = "Channel Name"
             val importance = NotificationManager.IMPORTANCE_HIGH
             val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
             notificationManager.createNotificationChannel(mChannel)
@@ -67,12 +118,20 @@ class UpdateDataWorker @AssistedInject constructor(
 
     }
 
-    @AssistedInject.Factory
-    interface Factory : CustomWorkerFactory
+    class Factory @Inject constructor(
+        val apiService: ApiService,
+        val dataBase: FilmsDataBase
+    ) : ChildWorkerFactory {
+        override fun create(appContext: Context, params: WorkerParameters): CoroutineWorker {
+            return UpdateDataWorker(appContext, params, apiService, dataBase)
+        }
 
-    interface CustomWorkerFactory {
-        fun create(context: Context, workerParams: WorkerParameters): ListenableWorker
     }
+
+    interface ChildWorkerFactory {
+        fun create(appContext: Context, params: WorkerParameters): CoroutineWorker
+    }
+
 
     companion object {
         var idWork = 0

@@ -43,6 +43,9 @@ android {
 
 dependencies {
 
+    //Time
+    implementation 'net.danlew:android.joda:2.10.14'
+
     implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.2'
 
     // Gson

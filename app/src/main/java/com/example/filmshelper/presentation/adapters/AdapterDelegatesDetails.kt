@@ -1,6 +1,5 @@
 package com.example.filmshelper.presentation.adapters
 
-import android.util.Log
 import com.example.filmshelper.R
 import com.example.filmshelper.data.models.DisplayableItem
 import com.example.filmshelper.data.models.filmDetails.Actor
@@ -58,7 +57,6 @@ class AdapterDelegatesDetails {
             { layoutInflater, root -> SimilarItemListBinding.inflate(layoutInflater, root, false) }
         ) {
             bind {
-                Log.d("riko", it.size.toString())
                 binding.apply {
                     textViewTitle.text = item.title
                     Picasso.get().load(item.image).fit()

@@ -75,7 +75,7 @@ class FilmDetailsFragment : Fragment() {
         val filmId = requireArguments().getString("filmId")
 
         viewModel.getMovieById(filmId.toString())
-        //viewModel.getYoutubeTrailerById(filmId.toString())
+
         if (user != null){
             isFilmFavourite(filmId!!)
         }
@@ -99,7 +99,7 @@ class FilmDetailsFragment : Fragment() {
                             val item =
                                 (viewModel.filmById.value as ViewState.Success)
 
-                            //addFavouriteFilm(item)
+
                             setFavouriteFilmState(item)
 
                         }
@@ -191,14 +191,7 @@ class FilmDetailsFragment : Fragment() {
             .collection("favouriteFilms").get().addOnSuccessListener {
                 val taskList: List<FirebaseUserFavouriteFilms> =
                     it.toObjects(FirebaseUserFavouriteFilms::class.java)
-                /*taskList.forEach { item ->
-                    if (item.id == id) {
-                        binding.imageButtonFavourites.setImageResource(R.drawable.ic_baseline_favorite_24)
-                    } else {
-                        binding.imageButtonFavourites.setImageResource(R.drawable.ic_baseline_favorite_not_pressed_24)
-                    }
 
-                }*/
                 val count = taskList.filter { filterItem ->
                     filterItem.id == id
                 }.size
@@ -241,7 +234,7 @@ class FilmDetailsFragment : Fragment() {
                         } else if (type == "tvShow")
                             commonList.addAll(it.data.tvSeriesInfo.creatorList)
                         commonList.addAll(it.data.actorList)
-                        //commonList.addAll(it.data.directorList)
+
                         castAdapter.items = commonList
                         similarAdapter.items = it.data.similars
                         categoriesAdapter.list = it.data.genreList

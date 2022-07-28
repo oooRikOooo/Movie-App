@@ -1,7 +1,7 @@
 package com.example.filmshelper.data.models.youtubeTrailer
 
 data class YoutubeTrailer(
-    val errorMessage: String,
+    val errorMessage: String?,
     val fullTitle: String,
     val imDbId: String,
     val title: String,

@@ -13,19 +13,28 @@ import com.example.filmshelper.data.models.popular.popularTvShows.ItemPopularTvS
 interface FilmsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addOrUpdatePopularFilms(film : ItemPopularMovies)
+    fun addOrUpdatePopularFilms(film: ItemPopularMovies)
+
+    @Query("DELETE FROM popular_films_table")
+    fun deleteAllPopularFilms(): Int
 
     @Query("SELECT * FROM popular_films_table")
-    fun readAllPopularFilms() : List<ItemPopularMovies>
+    fun readAllPopularFilms(): List<ItemPopularMovies>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addOrUpdateNowShowingFilms(film : ItemNowShowingMovies)
+    fun addOrUpdateNowShowingFilms(film: ItemNowShowingMovies)
+
+    @Query("DELETE FROM now_showing_movies_table")
+    fun deleteAllNowShowingFilms(): Int
 
     @Query("SELECT * FROM now_showing_movies_table")
-    fun readAllNowShowingFilms() : List<ItemNowShowingMovies>
+    fun readAllNowShowingFilms(): List<ItemNowShowingMovies>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addOrUpdatePopularTvShows(tvShow: ItemPopularTvShows)
+
+    @Query("DELETE FROM popular_tv_shows_table")
+    fun deleteAllPopularTvShows(): Int
 
     @Query("SELECT * FROM popular_tv_shows_table")
     fun readAllPopularTvShows(): List<ItemPopularTvShows>

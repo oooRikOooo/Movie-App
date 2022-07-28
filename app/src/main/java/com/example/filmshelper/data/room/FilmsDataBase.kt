@@ -12,7 +12,7 @@ import com.example.filmshelper.utils.PopularTvShowsTypeConverters
 
 @Database(
     entities = [ItemPopularMovies::class, ItemNowShowingMovies::class, ItemPopularTvShows::class],
-    version = 12,
+    version = 14,
     exportSchema = true
 )
 @TypeConverters(

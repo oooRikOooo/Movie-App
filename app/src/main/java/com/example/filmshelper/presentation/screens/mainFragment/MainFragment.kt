@@ -9,14 +9,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.*
 import com.example.filmshelper.R
 import com.example.filmshelper.appComponent
 import com.example.filmshelper.databinding.FragmentMainBinding
 import com.example.filmshelper.presentation.adapters.AdapterDelegatesHome
+import com.example.filmshelper.presentation.screens.mainFragment.updateDataWorker.UpdateDataWorker
 import com.example.filmshelper.utils.ViewStateWithList
 import com.faltenreich.skeletonlayout.applySkeleton
 import com.google.android.material.snackbar.Snackbar
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
+import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -61,6 +65,8 @@ class MainFragment : Fragment() {
         setupAdapters()
         getDataForAdapter()
         setOnClickListeners()
+
+        createWorkManager()
 
         return binding.root
     }
@@ -180,6 +186,42 @@ class MainFragment : Fragment() {
         }
 
 
+    }
+
+    private fun createWorkManager() {
+
+        val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE) ?: return
+        val hour = sharedPreferences.getInt("Hour", 18)
+        val minute = sharedPreferences.getInt("Minute", 0)
+
+        val currentDate = Calendar.getInstance()
+        val dueDate = Calendar.getInstance()
+
+        dueDate.set(Calendar.HOUR_OF_DAY, hour)
+        dueDate.set(Calendar.MINUTE, minute)
+        dueDate.set(Calendar.SECOND, 0)
+
+        if (dueDate.before(currentDate)) {
+            dueDate.add(Calendar.HOUR_OF_DAY, 24)
+        }
+
+        val timeDiff = dueDate.timeInMillis - currentDate.timeInMillis
+
+        val data = Data.Builder().putInt("NOTIFICATION_ID", 0).build()
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+        val myWorkRequest = PeriodicWorkRequestBuilder<UpdateDataWorker>(
+            12, TimeUnit.HOURS
+        )
+            .setConstraints(constraints)
+            .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS).setInputData(data).build()
+
+        WorkManager.getInstance(requireActivity()).enqueueUniquePeriodicWork(
+            "notification",
+            ExistingPeriodicWorkPolicy.REPLACE,
+            myWorkRequest
+        )
     }
 
 }

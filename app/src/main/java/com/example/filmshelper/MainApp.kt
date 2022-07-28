@@ -4,15 +4,15 @@ import android.app.Application
 import android.content.Context
 import androidx.work.Configuration
 import androidx.work.WorkManager
-import androidx.work.WorkerFactory
 import com.example.filmshelper.di.AppComponent
 import com.example.filmshelper.di.DaggerAppComponent
+import com.example.filmshelper.presentation.screens.mainFragment.updateDataWorker.UpdateDataWorkerFactory
 import javax.inject.Inject
 
 class MainApp : Application() {
 
     @Inject
-    lateinit var updateDataWorkerFactory: WorkerFactory
+    lateinit var updateDataWorkerFactory: UpdateDataWorkerFactory
 
     lateinit var appComponent: AppComponent
         private set
@@ -21,7 +21,7 @@ class MainApp : Application() {
         super.onCreate()
         appComponent = DaggerAppComponent.factory().create(this)
 
-        //appComponent.inject(this)
+        appComponent.inject(this)
 
         val workManagerConfig = Configuration.Builder()
             .setWorkerFactory(updateDataWorkerFactory)

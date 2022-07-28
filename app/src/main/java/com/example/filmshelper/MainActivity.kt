@@ -5,13 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.*
 import com.example.filmshelper.databinding.ActivityMainBinding
-import com.example.filmshelper.presentation.screens.mainFragment.updateDataWorker.UpdateDataWorker
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
@@ -47,21 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        createWorkManager()
 
-    }
-
-    private fun createWorkManager() {
-
-        val data = Data.Builder().putInt("NOTIFICATION_ID", 0).build()
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.NOT_ROAMING)
-            .setRequiresStorageNotLow(true)
-            .build()
-        val myWorkRequest = OneTimeWorkRequest.Builder(UpdateDataWorker::class.java)
-            .setInitialDelay(30000, TimeUnit.MILLISECONDS).setInputData(data).build()
-
-        WorkManager.getInstance(this).enqueue(myWorkRequest)
     }
 
 }

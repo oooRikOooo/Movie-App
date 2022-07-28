@@ -40,4 +40,7 @@
     <string name="cast">Cast</string>
     <string name="director">Director</string>
     <string name="similar">Similar</string>
+    <string name="updating_time">Updating Time:</string>
+    <string name="_18_by_default">18:00 (By Default)</string>
+    <string name="updating_time_with_values">%1$d:%2$d</string>
 </resources>

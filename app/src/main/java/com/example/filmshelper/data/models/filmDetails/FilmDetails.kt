@@ -11,7 +11,7 @@ data class FilmDetails(
     val countryList: List<Country>,
     val directorList: List<Director>,
     val directors: String,
-    val errorMessage: Any,
+    val errorMessage: String?,
     val fullCast: Any,
     val fullTitle: String,
     val genreList: List<Genre>,
