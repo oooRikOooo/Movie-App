@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp">
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="30dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/sort_amp_filter"
+            android:textColor="@color/text_sort_filter"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line" />
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/grey"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textView7"
+            app:layout_goneMarginTop="15dp" />
+
+        <TextView
+            android:id="@+id/textViewCategories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/categories"
+            android:textColor="@color/black_white"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/line2" />
+
+        <LinearLayout
+            android:id="@+id/linearLayoutCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewCategories">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonFeatureFilms"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/button_sort_filter_not_active"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:tag="feature"
+                android:text="@string/feature_film"
+                android:textAllCaps="false"
+                android:textColor="@color/sort_filter_main_red" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonTvMovie"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/button_sort_filter_not_active"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:tag="tv_movie"
+                android:text="@string/tv_movie"
+                android:textAllCaps="false"
+                android:textColor="@color/sort_filter_main_red" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonTvSeries"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/button_sort_filter_not_active"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:tag="tv_series"
+                android:text="@string/tv_series"
+                android:textAllCaps="false"
+                android:textColor="@color/sort_filter_main_red" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewGenres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/genre"
+            android:textColor="@color/black_white"
+            android:textSize="22sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCategories" />
+
+
+        <HorizontalScrollView
+            android:id="@+id/scrollViewGenres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:scrollbars="none"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewGenres">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonAction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_sort_filter_not_active"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:tag="action"
+                    android:text="@string/action"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sort_filter_main_red" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonAdventure"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_sort_filter_not_active"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:tag="adventure"
+                    android:text="@string/adventure"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sort_filter_main_red" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonComedy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_sort_filter_not_active"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:tag="comedy"
+                    android:text="@string/comedy"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sort_filter_main_red" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonDocumentary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_sort_filter_not_active"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:tag="documentary"
+                    android:text="@string/documentary"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sort_filter_main_red" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonDrama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_sort_filter_not_active"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:tag="drama"
+                    android:text="@string/drama"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sort_filter_main_red" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonFantasy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_sort_filter_not_active"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:tag="fantasy"
+                    android:text="@string/fantasy"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sort_filter_main_red" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonHistory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_sort_filter_not_active"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:tag="history"
+                    android:text="@string/history"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sort_filter_main_red" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonHorror"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_sort_filter_not_active"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:tag="horror"
+                    android:text="@string/horror"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sort_filter_main_red" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonRomance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_sort_filter_not_active"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:tag="romance"
+                    android:text="@string/romance"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sort_filter_main_red" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonSport"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_sort_filter_not_active"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:tag="sport"
+                    android:text="@string/sport"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sort_filter_main_red" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonThriller"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_sort_filter_not_active"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:tag="thriller"
+                    android:text="@string/thriller"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sort_filter_main_red" />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/buttonWestern"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/button_sort_filter_not_active"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:tag="western"
+                    android:text="@string/western"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sort_filter_main_red" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scrollViewGenres">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonReset"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_reset_bottom_sheet"
+                android:paddingStart="50dp"
+                android:paddingEnd="50dp"
+                android:text="@string/reset"
+                android:textAllCaps="false"
+                android:textColor="@color/sort_filter_main_red" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonApply"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_apply_bottom_sheet"
+                android:paddingStart="50dp"
+                android:paddingEnd="50dp"
+                android:text="@string/apply"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,6 +1,7 @@
 package com.example.filmshelper.presentation.screens
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmshelper.R
@@ -39,6 +41,9 @@ import javax.inject.Inject
 class FilmDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentFilmDetailsBinding
+
+    val args: FilmDetailsFragmentArgs by navArgs()
+
 
     private val viewModel: MainFragmentViewModel by viewModels {
         factory.create()
@@ -72,14 +77,14 @@ class FilmDetailsFragment : Fragment() {
 
         binding = FragmentFilmDetailsBinding.inflate(layoutInflater, container, false)
 
-        val filmId = requireArguments().getString("filmId")
+        val filmId = args.filmId
 
         viewModel.getMovieById(filmId.toString())
 
-        if (user != null){
+        if (user != null) {
             isFilmFavourite(filmId!!)
         }
-        setOnClickListeners()
+        setOnClickListeners(filmId)
         setupAdapter()
         getData()
 
@@ -89,7 +94,7 @@ class FilmDetailsFragment : Fragment() {
     }
 
 
-    private fun setOnClickListeners() {
+    private fun setOnClickListeners(filmId: String?) {
         binding.apply {
             imageButtonFavourites.setOnClickListener {
                 if (user != null) {
@@ -117,9 +122,17 @@ class FilmDetailsFragment : Fragment() {
                         }
                     }
                 } else {
-                    Toast.makeText(requireContext(), "Login in your account", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Login in your account", Toast.LENGTH_SHORT)
+                        .show()
                 }
 
+            }
+
+            imageButtonPlayTrailer.setOnClickListener {
+                startActivity(
+                    Intent(requireActivity(), TrailerActivity::class.java)
+                        .putExtra("filmId", filmId)
+                )
             }
         }
     }
@@ -140,7 +153,7 @@ class FilmDetailsFragment : Fragment() {
                     filterItem.id == film.data.id
                 }.size
 
-                if (count == 0){
+                if (count == 0) {
                     addFavouriteFilm(film)
                 }
 
@@ -196,7 +209,7 @@ class FilmDetailsFragment : Fragment() {
                     filterItem.id == id
                 }.size
 
-                if (count == 0){
+                if (count == 0) {
                     binding.imageButtonFavourites.setImageResource(R.drawable.ic_baseline_favorite_not_pressed_24)
                 } else {
                     binding.imageButtonFavourites.setImageResource(R.drawable.ic_baseline_favorite_24)
@@ -213,7 +226,7 @@ class FilmDetailsFragment : Fragment() {
                     Log.d("riko", "${it.error}2")
                 }
                 ViewState.Loading -> {
-                    Log.d("riko", "Loading2")
+                    postponeEnterTransition()
                     setViewAndProgressBarVisibility(
                         binding.nestedScroll, View.INVISIBLE,
                         binding.progressBarNestedScroll, View.VISIBLE
@@ -226,13 +239,12 @@ class FilmDetailsFragment : Fragment() {
                 is ViewState.Success -> {
                     binding.apply {
 
-                        val type = requireArguments().getString("type")
-
                         val commonList = mutableListOf<DisplayableItem>()
-                        if (type == "film") {
+
+                        if (it.data.tvSeriesInfo == null || it.data.tvSeriesInfo.creatorList.isEmpty()) {
                             commonList.addAll(it.data.directorList)
-                        } else if (type == "tvShow")
-                            commonList.addAll(it.data.tvSeriesInfo.creatorList)
+                        } else commonList.addAll(it.data.tvSeriesInfo.creatorList)
+
                         commonList.addAll(it.data.actorList)
 
                         castAdapter.items = commonList
@@ -259,7 +271,7 @@ class FilmDetailsFragment : Fragment() {
             textViewFilmTitle.text = it.data.title
             textViewRatingImdb.text =
                 requireContext().getString(R.string.rating_imdb, it.data.imDbRating)
-            textViewLength.text = it.data.runtimeMins
+            textViewLength.text = it.data.runtimeMins + " min"
             Picasso.get().load(it.data.image).noFade().fit().centerCrop().into(mainImageView)
             if (it.data.languages.contains(",")) {
 

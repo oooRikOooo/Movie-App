@@ -8,6 +8,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sign_in_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
@@ -64,7 +65,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonSignUp"
+            android:id="@+id/buttonSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -88,10 +89,10 @@
             android:textColor="@color/light_grey_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonSignUp" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonSignIn" />
 
         <TextView
-            android:id="@+id/textViewToSignIn"
+            android:id="@+id/textViewToSignUp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sign_up"

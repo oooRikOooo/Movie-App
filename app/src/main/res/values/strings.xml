@@ -43,4 +43,31 @@
     <string name="updating_time">Updating Time:</string>
     <string name="_18_by_default">18:00 (By Default)</string>
     <string name="updating_time_with_values">%1$d:%2$d</string>
+    <string name="filter_results">Filter Results</string>
+    <string name="sort_amp_filter"><![CDATA[Sort & Filter]]></string>
+    <string name="categories">Categories</string>
+    <string name="feature_film">Feature Film</string>
+    <string name="tv_movie">Tv Movie</string>
+    <string name="tv_series">Tv Series</string>
+    <string name="genre">Genre</string>
+    <string name="action">Action</string>
+    <string name="adventure">Adventure</string>
+    <string name="comedy">Comedy</string>
+    <string name="documentary">Documentary</string>
+    <string name="drama">Drama</string>
+    <string name="fantasy">Fantasy</string>
+    <string name="history">History</string>
+    <string name="horror">Horror</string>
+    <string name="romance">Romance</string>
+    <string name="sport">Sport</string>
+    <string name="thriller">Thriller</string>
+    <string name="western">Western</string>
+    <string name="sort">Sort</string>
+    <string name="reset">Reset</string>
+    <string name="apply">Apply</string>
+    <string name="enter_your_city">Enter your city</string>
+    <string name="show_movie_theatres">Show movie theatres</string>
+    <string name="title_activity_splash_screen">FilmsHelper</string>
+    <string name="play_trailer">Play Trailer</string>
+
 </resources>

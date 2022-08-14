@@ -9,18 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.work.*
 import com.example.filmshelper.R
 import com.example.filmshelper.appComponent
+import com.example.filmshelper.data.models.DisplayableItem
 import com.example.filmshelper.databinding.FragmentMainBinding
 import com.example.filmshelper.presentation.adapters.AdapterDelegatesHome
-import com.example.filmshelper.presentation.screens.mainFragment.updateDataWorker.UpdateDataWorker
 import com.example.filmshelper.utils.ViewStateWithList
 import com.faltenreich.skeletonlayout.applySkeleton
 import com.google.android.material.snackbar.Snackbar
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
-import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -38,13 +35,6 @@ class MainFragment : Fragment() {
     private val nowShowingAdapter = ListDelegationAdapter(
         AdapterDelegatesHome().nowShowingFilmsAdapterDelegate()
     )
-    private val popularMoviesAdapter = ListDelegationAdapter(
-        AdapterDelegatesHome().popularFilmsAdapterDelegate()
-    )
-    private val popularTvShowsAdapter = ListDelegationAdapter(
-        AdapterDelegatesHome().popularTvShowsAdapterDelegate()
-    )
-
 
     override fun onAttach(context: Context) {
         context.appComponent.inject(this)
@@ -58,22 +48,31 @@ class MainFragment : Fragment() {
 
         binding = FragmentMainBinding.inflate(layoutInflater, container, false)
 
-        viewModel.getNowShowingMovies()
-        viewModel.getPopularMovies()
-        viewModel.getPopularTvShows()
+        return binding.root
+    }
 
-        setupAdapters()
-        getDataForAdapter()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         setOnClickListeners()
 
-        createWorkManager()
+        val itemDetailFragmentContainer: View? = view.findViewById(R.id.item_detail_nav_container)
 
-        return binding.root
+        val popularAdapter = ListDelegationAdapter(
+            AdapterDelegatesHome().popularFilmsAdapterDelegate(itemDetailFragmentContainer)
+        )
+
+        val popularTvShowsAdapter = ListDelegationAdapter(
+            AdapterDelegatesHome().popularTvShowsAdapterDelegate(itemDetailFragmentContainer)
+        )
+
+        setupAdapters(popularAdapter, popularTvShowsAdapter)
+        getDataForAdapter(popularAdapter, popularTvShowsAdapter)
     }
 
     private fun setOnClickListeners() {
         binding.apply {
-            swipeRefreshLayout.setOnRefreshListener {
+            swipeRefreshLayout?.setOnRefreshListener {
                 swipeRefreshLayout.isRefreshing = false
                 viewModel.getNowShowingMovies()
                 viewModel.getPopularMovies()
@@ -83,7 +82,10 @@ class MainFragment : Fragment() {
     }
 
 
-    private fun setupAdapters() {
+    private fun setupAdapters(
+        popularAdapter: ListDelegationAdapter<List<DisplayableItem>>,
+        popularTvShowsAdapter: ListDelegationAdapter<List<DisplayableItem>>
+    ) {
 
         binding.recyclerviewNowShowing.apply {
             setHasFixedSize(true)
@@ -95,7 +97,7 @@ class MainFragment : Fragment() {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
             isNestedScrollingEnabled = false
-            adapter = popularMoviesAdapter
+            adapter = popularAdapter
         }
 
         binding.recyclerviewPopularTvShows.apply {
@@ -106,7 +108,10 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun getDataForAdapter() {
+    private fun getDataForAdapter(
+        popularAdapter: ListDelegationAdapter<List<DisplayableItem>>,
+        popularTvShowsAdapter: ListDelegationAdapter<List<DisplayableItem>>
+    ) {
         val skeletonNowShowing =
             binding.recyclerviewNowShowing.applySkeleton(R.layout.now_showing_item_list)
 
@@ -157,7 +162,7 @@ class MainFragment : Fragment() {
                     skeletonPopular.showOriginal()
                 }
                 is ViewStateWithList.Success -> {
-                    popularMoviesAdapter.items = it.data
+                    popularAdapter.items = it.data
                     skeletonPopular.showOriginal()
                 }
             }
@@ -187,41 +192,4 @@ class MainFragment : Fragment() {
 
 
     }
-
-    private fun createWorkManager() {
-
-        val sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE) ?: return
-        val hour = sharedPreferences.getInt("Hour", 18)
-        val minute = sharedPreferences.getInt("Minute", 0)
-
-        val currentDate = Calendar.getInstance()
-        val dueDate = Calendar.getInstance()
-
-        dueDate.set(Calendar.HOUR_OF_DAY, hour)
-        dueDate.set(Calendar.MINUTE, minute)
-        dueDate.set(Calendar.SECOND, 0)
-
-        if (dueDate.before(currentDate)) {
-            dueDate.add(Calendar.HOUR_OF_DAY, 24)
-        }
-
-        val timeDiff = dueDate.timeInMillis - currentDate.timeInMillis
-
-        val data = Data.Builder().putInt("NOTIFICATION_ID", 0).build()
-        val constraints = Constraints.Builder()
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .build()
-        val myWorkRequest = PeriodicWorkRequestBuilder<UpdateDataWorker>(
-            12, TimeUnit.HOURS
-        )
-            .setConstraints(constraints)
-            .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS).setInputData(data).build()
-
-        WorkManager.getInstance(requireActivity()).enqueueUniquePeriodicWork(
-            "notification",
-            ExistingPeriodicWorkPolicy.REPLACE,
-            myWorkRequest
-        )
-    }
-
 }

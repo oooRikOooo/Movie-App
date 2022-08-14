@@ -14,7 +14,8 @@ class RemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getPopularFilms(): Result<PopularMovies> {
         return try {
-            Result.success(apiService.getPopularMovies())
+            val data = apiService.getPopularMovies(count = 5)
+            Result.success(data)
         } catch (e : IOException){
             Result.failure(e)
         }

@@ -1,6 +1,9 @@
 package com.example.filmshelper.presentation.screens.mainFragment
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.filmshelper.data.models.filmDetails.FilmDetails
 import com.example.filmshelper.data.models.nowShowingMovies.ItemNowShowingMovies
 import com.example.filmshelper.data.models.popular.popularMovies.ItemPopularMovies
@@ -40,11 +43,17 @@ class MainFragmentViewModel @Inject constructor(
     private val _filmById = MutableLiveData<ViewState<FilmDetails>>()
     private val _youtubeTrailer = MutableLiveData<ViewState<YoutubeTrailer>>()
 
-    fun getNowShowingMovies() = viewModelScope.launch(Dispatchers.IO){
+    init {
+        getNowShowingMovies()
+        getPopularMovies()
+        getPopularTvShows()
+    }
+
+    fun getNowShowingMovies() = viewModelScope.launch(Dispatchers.IO) {
         _listNowShowingMovies.postValue(ViewStateWithList.Loading)
         val result = repository.getMoviesInTheaters()
 
-        if (result.isSuccess){
+        if (result.isSuccess) {
             result.getOrNull()?.results?.let {
                 _listNowShowingMovies.postValue(ViewStateWithList.Success(it))
                 it.forEach { itemNowShowingFilm ->

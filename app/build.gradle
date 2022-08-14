@@ -4,10 +4,20 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'androidx.navigation.safeargs.kotlin'
     /*id 'com.google.gms.google-services'*/
 }
 
 android {
+    signingConfigs {
+        release {
+        storeFile file('D:\\astudio_projects\\films_helper_key.jks')
+            storePassword 'EsataB1234'
+            keyAlias 'key0'
+            keyPassword 'EsataB1234'
+        }
+    }
     compileSdk 32
 
     defaultConfig {
@@ -15,15 +25,21 @@ android {
         minSdk 21
         targetSdk 32
         versionCode 1
-        versionName "1.0"
+        versionName "1.01"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    sourceSets{
+        getByName("main").java.srcDirs("build/generated/source/navigation-args")
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -36,6 +52,7 @@ android {
 
     buildFeatures {
         dataBinding true
+        viewBinding true
     }
 
 
@@ -43,9 +60,21 @@ android {
 
 dependencies {
 
-    //Time
+    // Rxjava
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
+    implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
+
+
+    // Google Maps
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+    implementation 'com.google.android.libraries.places:places:2.6.0'
+
+    // Time
     implementation 'net.danlew:android.joda:2.10.14'
 
+    // AdapterDelegate
     implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.2'
 
     // Gson
@@ -54,7 +83,7 @@ dependencies {
     // Work Manager
     implementation "androidx.work:work-runtime-ktx:2.7.1"
 
-    //dagger2
+    // Dagger2
     implementation "com.google.dagger:dagger-android-support:2.42"
     implementation 'com.google.dagger:dagger:2.42'
     kapt 'com.google.dagger:dagger-compiler:2.42'
@@ -92,6 +121,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
     implementation 'com.google.firebase:firebase-firestore-ktx:24.2.0'
     implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.11'
+    implementation 'com.google.firebase:firebase-messaging:23.0.6'
 
     // Room
     implementation("androidx.room:room-runtime:2.4.2")

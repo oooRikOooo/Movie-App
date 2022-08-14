@@ -28,9 +28,9 @@ class UpdateDataWorker @Inject constructor(
         val popularFilmsState = updatePopularFilms()
         val popularTvShowsState = updatePopularTvShows()
         if (popularFilmsState && nowShowingFilmsState && popularTvShowsState) {
-            sendNotification("Data Successfully Updated")
+            sendNotification("Data Successfully Updated $nowShowingFilmsState $popularFilmsState $popularTvShowsState")
         } else {
-            sendNotification("Data Not Updated")
+            sendNotification("Data Not Updated $nowShowingFilmsState $popularFilmsState $popularTvShowsState")
             return Result.retry()
         }
 
@@ -39,7 +39,7 @@ class UpdateDataWorker @Inject constructor(
 
     private suspend fun updatePopularFilms(): Boolean {
         val isSuccessful = dataBase.filmsDao().deleteAllPopularFilms()
-        val popularMovies = apiService.getPopularMovies()
+        val popularMovies = apiService.getPopularMovies(count = 5)
         return if (isSuccessful == 0) {
             false
         } else {
