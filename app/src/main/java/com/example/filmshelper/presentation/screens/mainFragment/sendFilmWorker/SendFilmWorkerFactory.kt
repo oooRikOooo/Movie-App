@@ -8,7 +8,6 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 class SendFilmWorkerFactory @Inject constructor(
-    //private val updateDataWorkerFactory: UpdateDataWorker.Factory
     private val workerFactories: MutableMap<Class<out ListenableWorker>, Provider<SendFilmWorker.ChildWorkerFactory>>
 ) : WorkerFactory() {
 

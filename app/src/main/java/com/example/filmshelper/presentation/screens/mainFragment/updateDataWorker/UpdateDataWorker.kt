@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
+import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.example.filmshelper.R
 import com.example.filmshelper.data.ApiService
@@ -28,9 +29,9 @@ class UpdateDataWorker @Inject constructor(
         val popularFilmsState = updatePopularFilms()
         val popularTvShowsState = updatePopularTvShows()
         if (popularFilmsState && nowShowingFilmsState && popularTvShowsState) {
-            sendNotification("Data Successfully Updated $nowShowingFilmsState $popularFilmsState $popularTvShowsState")
+            sendNotification("Data Successfully Updated")
         } else {
-            sendNotification("Data Not Updated $nowShowingFilmsState $popularFilmsState $popularTvShowsState")
+            sendNotification("Data Not Updated")
             return Result.retry()
         }
 
@@ -129,7 +130,7 @@ class UpdateDataWorker @Inject constructor(
     }
 
     interface ChildWorkerFactory {
-        fun create(appContext: Context, params: WorkerParameters): CoroutineWorker
+        fun create(appContext: Context, params: WorkerParameters): ListenableWorker
     }
 
 

@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         val currentDate = Calendar.getInstance()
         val dueDate = Calendar.getInstance()
 
-        dueDate.set(Calendar.HOUR_OF_DAY, 5)
+        dueDate.set(Calendar.HOUR_OF_DAY, 23)
         dueDate.set(Calendar.MINUTE, 0)
         dueDate.set(Calendar.SECOND, 0)
 
@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity() {
         val alarm = getSystemService(ALARM_SERVICE) as AlarmManager
         alarm.setRepeating(
             AlarmManager.RTC_WAKEUP,
-            10 * 60 * 1000, //10 * 60 * 1000
+            30 * 60 * 1000, //10 * 60 * 1000
             (4 * 60 * 60 * 1000).toLong(),//4 * 60 * 60 * 1000
             pIntent
         )

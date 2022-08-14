@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Color
 import androidx.work.CoroutineWorker
+import androidx.work.ListenableWorker
 import androidx.work.WorkerParameters
 import com.example.filmshelper.data.ApiService
 import com.example.filmshelper.data.FirebaseApiService
@@ -104,7 +105,7 @@ class SendFilmWorker @Inject constructor(
     }
 
     interface ChildWorkerFactory {
-        fun create(appContext: Context, params: WorkerParameters): CoroutineWorker
+        fun create(appContext: Context, params: WorkerParameters): ListenableWorker
     }
 
 
