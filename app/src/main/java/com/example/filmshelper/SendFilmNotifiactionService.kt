@@ -51,16 +51,6 @@ class BootService : Service() {
 
         appComponent.inject(this)
 
-
-
-
-        isRunning = true
-    }
-
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-
-        isRunning = true
-
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -85,15 +75,12 @@ class BootService : Service() {
 
         startForeground(1, notification)
 
+    }
 
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         startCoroutine()
 
         return START_STICKY
-    }
-
-    override fun onDestroy() {
-        isRunning = false
-        isFirst = true
     }
 
     override fun onBind(p0: Intent?): IBinder? {
@@ -145,7 +132,6 @@ class BootService : Service() {
 
 
     companion object {
-        var isRunning = false
         var id = 0
         var isFirst = true
     }

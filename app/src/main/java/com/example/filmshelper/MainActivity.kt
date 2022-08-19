@@ -2,7 +2,6 @@ package com.example.filmshelper
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -53,8 +52,6 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        //startService()
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             createWorkManagerSendNotificationWithMovie()
         } else {
@@ -62,25 +59,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         createWorkManagerUpdateData()
-    }
-
-    private fun startService() {
-        val prefs =
-            applicationContext.getSharedPreferences("isShowNotification", Context.MODE_PRIVATE)
-
-        prefs.edit().putBoolean("isShowNotification", true).apply()
-
-        if (getNotificationsState(applicationContext) && !BootService.isRunning) {
-
-            val serviceIntent = Intent(applicationContext, BootService::class.java)
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                applicationContext.startForegroundService(serviceIntent)
-            } else {
-                applicationContext.startService(serviceIntent)
-            }
-        }
-
     }
 
     private fun createWorkManagerUpdateData() {
@@ -146,19 +124,5 @@ class MainActivity : AppCompatActivity() {
             pIntent
         )
     }
-
-    companion object {
-        private const val IS_SHOW_NOTIFICATION = "isShowNotification"
-
-        fun getNotificationsState(context: Context): Boolean {
-            val pref = context.getSharedPreferences(
-                IS_SHOW_NOTIFICATION,
-                Context.MODE_PRIVATE
-            )
-
-            return pref.getBoolean(IS_SHOW_NOTIFICATION, false)
-        }
-    }
-
 
 }
