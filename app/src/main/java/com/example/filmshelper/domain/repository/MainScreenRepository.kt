@@ -13,11 +13,13 @@ interface MainScreenRepository {
 
     suspend fun getMoviesInTheaters(): Result<NowShowingMovies>
 
+    suspend fun getMoviesInTheatersFromServer(): Result<NowShowingMovies>
+
     suspend fun getPopularMovies(): Result<PopularMovies>
 
-    suspend fun getMovieById(id:String): Result<FilmDetails>
+    suspend fun getMovieById(id: String): Result<FilmDetails>
 
-    suspend fun getMovieTrailerById(id:String): Result<YoutubeTrailer>
+    suspend fun getMovieTrailerById(id: String): Result<YoutubeTrailer>
 
     suspend fun getPopularTvShow(): Result<PopularTvShows>
 

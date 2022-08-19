@@ -22,10 +22,10 @@ class RemoteDataSourceImpl @Inject constructor(
 
     }
 
-    override suspend fun getNowShowingFilms(): Result<NowShowingMovies> {
+    override suspend fun getNowShowingFilms(count: Int): Result<NowShowingMovies> {
         return try {
-            Result.success(apiService.getMoviesInTheaters())
-        } catch (e: IOException){
+            Result.success(apiService.getMoviesInTheaters(count = count))
+        } catch (e: IOException) {
             Result.failure(e)
         }
     }

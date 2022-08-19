@@ -10,6 +10,7 @@ import com.example.filmshelper.data.models.nowShowingMovies.ItemNowShowingMovies
 import com.example.filmshelper.data.models.popular.popularMovies.ItemPopularMovies
 import com.example.filmshelper.data.models.popular.popularTvShows.ItemPopularTvShows
 import com.example.filmshelper.databinding.NowShowingItemListBinding
+import com.example.filmshelper.databinding.NowShowingItemListHorizontalBinding
 import com.example.filmshelper.databinding.PopularItemListBinding
 import com.example.filmshelper.databinding.PopularTvShowItemListBinding
 import com.example.filmshelper.presentation.screens.mainFragment.MainFragmentDirections
@@ -17,6 +18,7 @@ import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.squareup.picasso.Picasso
 
 class AdapterDelegatesHome {
+
 
     fun popularFilmsAdapterDelegate(itemDetailFragmentContainer: View?) =
         adapterDelegateViewBinding<ItemPopularMovies, DisplayableItem, PopularItemListBinding>(
@@ -106,4 +108,24 @@ class AdapterDelegatesHome {
                 }
             }
         }
+
+    fun nowShowingShowingFullAdapterDelegate() =
+        adapterDelegateViewBinding<ItemNowShowingMovies, DisplayableItem, NowShowingItemListHorizontalBinding>(
+            { layoutInflater, root ->
+                NowShowingItemListHorizontalBinding.inflate(
+                    layoutInflater, root, false
+                )
+            }
+        ) {
+            bind {
+                binding.apply {
+                    textViewTitleNowShowing.text = item.title
+                    textViewRatingNowShowing.text = item.runtimeStr
+
+                    Picasso.get().load(item.image).fit()
+                        .centerCrop().into(imageViewNowShowing)
+                }
+            }
+        }
+
 }

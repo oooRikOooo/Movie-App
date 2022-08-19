@@ -20,8 +20,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.filmshelper.R
 import com.example.filmshelper.appComponent
 import com.example.filmshelper.databinding.FragmentEditProfileBinding
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.squareup.picasso.Picasso
 import javax.inject.Inject
@@ -58,11 +56,6 @@ class EditProfileFragment : Fragment() {
         Picasso.get().load(viewModel.auth.currentUser!!.photoUrl).fit().centerCrop()
             .into(binding.imageViewProfilePhoto)
         photoUri = viewModel.auth.currentUser?.photoUrl
-        binding.textViewUpdatingTime.text = requireContext().getString(
-            R.string.updating_time_with_values,
-            getHourFromSharedPreferences(sharedPreferences),
-            getMinuteFromSharedPreferences(sharedPreferences)
-        )
         setOnClickListeners()
 
         return binding.root
@@ -84,46 +77,7 @@ class EditProfileFragment : Fragment() {
                 Toast.makeText(requireContext(), "Working", Toast.LENGTH_SHORT).show()
                 pickPhoto()
             }
-
-            imageButtonChangeUpdatingTime.setOnClickListener {
-                openTimePicker()
-            }
         }
-    }
-
-    private fun openTimePicker() {
-
-
-        val hour = getHourFromSharedPreferences(sharedPreferences)
-        val minute = getMinuteFromSharedPreferences(sharedPreferences)
-
-        val picker = MaterialTimePicker.Builder()
-            .setTimeFormat(TimeFormat.CLOCK_24H)
-            .setHour(hour)
-            .setMinute(minute)
-            .setTitleText("Set updating time")
-            .build()
-
-        picker.show(childFragmentManager, "TAG")
-
-        picker.addOnPositiveButtonClickListener {
-
-            with(sharedPreferences.edit()) {
-                putInt("Hour", picker.hour)
-                putInt("Minute", picker.minute)
-                apply()
-            }
-
-            picker.dismiss()
-        }
-    }
-
-    private fun getHourFromSharedPreferences(sharedPreferences: SharedPreferences): Int {
-        return sharedPreferences.getInt("Hour", 12)
-    }
-
-    private fun getMinuteFromSharedPreferences(sharedPreferences: SharedPreferences): Int {
-        return sharedPreferences.getInt("Minute", 0)
     }
 
     private fun uploadPhoto(name: Editable) {

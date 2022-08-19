@@ -31,7 +31,7 @@ class UpdateDataWorker @Inject constructor(
         if (popularFilmsState && nowShowingFilmsState && popularTvShowsState) {
             sendNotification("Data Successfully Updated")
         } else {
-            sendNotification("Data Not Updated")
+            sendNotification("Data Not Updated $nowShowingFilmsState $popularFilmsState $popularTvShowsState")
             return Result.retry()
         }
 

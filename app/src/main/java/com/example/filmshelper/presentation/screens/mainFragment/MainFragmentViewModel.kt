@@ -24,6 +24,9 @@ class MainFragmentViewModel @Inject constructor(
     val listNowShowingMovies: LiveData<ViewStateWithList<ItemNowShowingMovies>>
         get() = _listNowShowingMovies
 
+    val listNowShowingFilmsFull: LiveData<ViewStateWithList<ItemNowShowingMovies>>
+        get() = _listNowShowingFilmsFull
+
     val listPopularMovies: LiveData<ViewStateWithList<ItemPopularMovies>>
         get() = _listPopularMovies
 
@@ -38,6 +41,8 @@ class MainFragmentViewModel @Inject constructor(
         get() = _youtubeTrailer
 
     private val _listNowShowingMovies = MutableLiveData<ViewStateWithList<ItemNowShowingMovies>>()
+    private val _listNowShowingFilmsFull =
+        MutableLiveData<ViewStateWithList<ItemNowShowingMovies>>()
     private val _listPopularMovies = MutableLiveData<ViewStateWithList<ItemPopularMovies>>()
     private val _listPopularTvShows = MutableLiveData<ViewStateWithList<ItemPopularTvShows>>()
     private val _filmById = MutableLiveData<ViewState<FilmDetails>>()
@@ -60,25 +65,40 @@ class MainFragmentViewModel @Inject constructor(
                     repository.addOrUpdateLocaleNowShowingFilms(itemNowShowingFilm)
 
                 }
-            } ?: run{
+            } ?: run {
                 _listNowShowingMovies.postValue(ViewStateWithList.NoData)
             }
 
-        }
-
-        else {
+        } else {
             _listNowShowingMovies.postValue(ViewStateWithList.Error(result.exceptionOrNull()!!))
         }
     }
 
-    fun getPopularMovies() = viewModelScope.launch(Dispatchers.IO){
+    fun getNowShowingFilmsFromServer() = viewModelScope.launch(Dispatchers.IO) {
+        _listNowShowingFilmsFull.postValue(ViewStateWithList.Loading)
+
+        val result = repository.getMoviesInTheatersFromServer()
+
+        if (result.isSuccess) {
+            result.getOrNull()?.results?.let {
+                _listNowShowingFilmsFull.postValue(ViewStateWithList.Success(it))
+            } ?: run {
+                _listNowShowingFilmsFull.postValue(ViewStateWithList.NoData)
+            }
+        } else {
+            _listNowShowingFilmsFull.postValue(ViewStateWithList.Error(result.exceptionOrNull()!!))
+        }
+    }
+
+
+    fun getPopularMovies() = viewModelScope.launch(Dispatchers.IO) {
         _listPopularMovies.postValue(ViewStateWithList.Loading)
         val result = repository.getPopularMovies()
 
-        if (result.isSuccess){
+        if (result.isSuccess) {
             result.getOrNull()?.results?.let {
                 _listPopularMovies.postValue(ViewStateWithList.Success(it))
-                it.forEach{ itemPopularFilm ->
+                it.forEach { itemPopularFilm ->
                     repository.addOrUpdateLocalePopularFilms(itemPopularFilm)
                 }
             } ?: run {

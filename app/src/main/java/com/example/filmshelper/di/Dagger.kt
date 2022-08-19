@@ -22,6 +22,7 @@ import com.example.filmshelper.presentation.screens.FilmDetailsFragment
 import com.example.filmshelper.presentation.screens.TrailerActivity
 import com.example.filmshelper.presentation.screens.locationFragments.LocationFragment
 import com.example.filmshelper.presentation.screens.mainFragment.MainFragment
+import com.example.filmshelper.presentation.screens.mainFragment.NowShowingFilmsFragment
 import com.example.filmshelper.presentation.screens.mainFragment.sendFilmWorker.SendFilmWorker
 import com.example.filmshelper.presentation.screens.mainFragment.updateDataWorker.UpdateDataWorker
 import com.example.filmshelper.presentation.screens.profileFragments.*
@@ -52,6 +53,7 @@ interface AppComponent {
     fun inject(fragment: ProfileSignUpFragment)
     fun inject(activity: TrailerActivity)
     fun inject(service: BootService)
+    fun inject(fragment: NowShowingFilmsFragment)
 
     @Component.Factory
     interface Factory {

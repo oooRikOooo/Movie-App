@@ -23,12 +23,16 @@ class MainScreenRepositoryImpl @Inject constructor(
 
     override suspend fun getMoviesInTheaters(): Result<NowShowingMovies> {
 
-        val localeResult = popularMovieLocaleDataSource.getNowShowingFilms()
+        val localeResult = popularMovieLocaleDataSource.getNowShowingFilms(4)
 
         return if (localeResult.isSuccess) {
             localeResult
-        } else popularMovieRemoteDataSource.getNowShowingFilms()
+        } else popularMovieRemoteDataSource.getNowShowingFilms(4)
 
+    }
+
+    override suspend fun getMoviesInTheatersFromServer(): Result<NowShowingMovies> {
+        return popularMovieRemoteDataSource.getNowShowingFilms(100)
     }
 
     override suspend fun getPopularMovies(): Result<PopularMovies> {

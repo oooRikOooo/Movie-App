@@ -7,7 +7,7 @@ import com.example.filmshelper.data.models.popular.popularTvShows.PopularTvShows
 interface FilmsDataSource {
     suspend fun getPopularFilms(): Result<PopularMovies>
 
-    suspend fun getNowShowingFilms() : Result<NowShowingMovies>
+    suspend fun getNowShowingFilms(count: Int): Result<NowShowingMovies>
 
     suspend fun getPopularTvShows(): Result<PopularTvShows>
 }

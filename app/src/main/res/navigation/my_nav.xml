@@ -22,6 +22,9 @@
                 app:argType="string"
                 app:nullable="true" />
         </action>
+        <action
+            android:id="@+id/action_mainFragment_to_nowShowingFilmsFragment"
+            app:destination="@id/nowShowingFilmsFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -135,4 +138,9 @@
         android:name="com.example.filmshelper.presentation.screens.profileFragments.FavouritesFilmsFragment"
         android:label="fragment_favourites_films"
         tools:layout="@layout/fragment_favourites_films" />
+    <fragment
+        android:id="@+id/nowShowingFilmsFragment"
+        android:name="com.example.filmshelper.presentation.screens.mainFragment.NowShowingFilmsFragment"
+        android:label="fragment_now_showing_films"
+        tools:layout="@layout/fragment_now_showing_films" />
 </navigation>

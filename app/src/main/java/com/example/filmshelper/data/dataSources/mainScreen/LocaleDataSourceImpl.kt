@@ -30,14 +30,18 @@ class LocaleDataSourceImpl @Inject constructor(
         dataBase.filmsDao().addOrUpdatePopularFilms(film)
     }
 
-    override suspend fun getNowShowingFilms(): Result<NowShowingMovies> {
-        val data = NowShowingMovies("okay","?groups=now-playing-us&count=5", dataBase.filmsDao().readAllNowShowingFilms())
+    override suspend fun getNowShowingFilms(count: Int): Result<NowShowingMovies> {
+        val data = NowShowingMovies(
+            "okay",
+            "?groups=now-playing-us&count=5",
+            dataBase.filmsDao().readAllNowShowingFilms()
+        )
 
         return try {
             if (data.results.isNotEmpty()) {
                 Result.success(data)
             } else throw IOException()
-        } catch (e : IOException){
+        } catch (e: IOException) {
             Result.failure(e)
         }
     }

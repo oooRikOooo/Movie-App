@@ -88,23 +88,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/recyclerviewNowShowing" />
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/buttonSeeMorePopularMovies"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginEnd="20dp"
-                        android:background="@drawable/button_see_more"
-                        android:fontFamily="@font/roboto_light"
-                        android:text="@string/see_more"
-                        android:textAllCaps="false"
-                        android:textColor="@color/grey"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@+id/recyclerviewPopular"
-                        app:layout_constraintEnd_toEndOf="parent"
-
-                        app:layout_constraintTop_toBottomOf="@id/recyclerviewNowShowing" />
-
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerviewPopular"
                         android:layout_width="match_parent"
@@ -130,22 +113,6 @@
                         android:textSize="25sp"
                         app:layout_constraintBottom_toTopOf="@id/recyclerviewPopularTvShows"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/recyclerviewPopular" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/buttonSeeMorePopularTvShows"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginEnd="20dp"
-                        android:background="@drawable/button_see_more"
-                        android:fontFamily="@font/roboto_light"
-                        android:text="@string/see_more"
-                        android:textAllCaps="false"
-                        android:textColor="@color/grey"
-                        android:textSize="18sp"
-                        app:layout_constraintBottom_toTopOf="@id/recyclerviewPopularTvShows"
-                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/recyclerviewPopular" />
 
                     <androidx.recyclerview.widget.RecyclerView

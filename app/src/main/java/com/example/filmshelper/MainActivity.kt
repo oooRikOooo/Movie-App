@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity() {
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
         val myWorkRequest = PeriodicWorkRequestBuilder<UpdateDataWorker>(
-            12, TimeUnit.HOURS
+            15, TimeUnit.MINUTES
         )
             .setConstraints(constraints)
             .setInitialDelay(timeDiff, TimeUnit.MILLISECONDS).setInputData(data).build()
@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() {
             4, TimeUnit.HOURS
         )
             .setConstraints(constraints)
-            .setInitialDelay(30 * 60 * 1000, TimeUnit.MILLISECONDS).setInputData(data).build()
+            .setInitialDelay(10 * 60 * 1000, TimeUnit.MILLISECONDS).setInputData(data).build()
 
 
         WorkManager.getInstance(this).enqueueUniquePeriodicWork(

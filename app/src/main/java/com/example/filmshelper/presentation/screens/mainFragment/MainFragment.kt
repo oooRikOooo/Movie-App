@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmshelper.R
@@ -77,6 +78,9 @@ class MainFragment : Fragment() {
                 viewModel.getNowShowingMovies()
                 viewModel.getPopularMovies()
                 viewModel.getPopularTvShows()
+            }
+            buttonSeeMoreNowShowing.setOnClickListener {
+                findNavController().navigate(R.id.action_mainFragment_to_nowShowingFilmsFragment)
             }
         }
     }

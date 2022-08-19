@@ -16,8 +16,10 @@ private const val API_KEY1 = "k_57b5u7uy"
 
 interface ApiService {
 
-    @GET("AdvancedSearch/$API_KEY2?groups=now-playing-us&count=4")
-    suspend fun getMoviesInTheaters(): NowShowingMovies
+    @GET("AdvancedSearch/$API_KEY2?groups=now-playing-us")
+    suspend fun getMoviesInTheaters(
+        @Query("count") count: Int = 4
+    ): NowShowingMovies
 
     @GET("AdvancedSearch/$API_KEY2?title_type=feature&groups=top_100")
     suspend fun getPopularMovies(

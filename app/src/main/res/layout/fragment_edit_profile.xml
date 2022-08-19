@@ -73,43 +73,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="30dp"
-            android:text="@string/updating_time"
-            android:textColor="@color/black_white"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPersonName" />
-
-        <TextView
-            android:id="@+id/textViewUpdatingTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="10dp"
-            android:text="@string/_18_by_default"
-            android:textColor="@color/black_white"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPersonName"
-            app:layout_goneMarginTop="30dp" />
-
-        <ImageButton
-            android:id="@+id/imageButtonChangeUpdatingTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_change_updating_time_corner"
-            android:padding="5dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginStart="10dp"
-            app:layout_constraintStart_toEndOf="@+id/textViewUpdatingTime"
-            app:layout_constraintTop_toBottomOf="@+id/editTextPersonName"
-            app:srcCompat="@drawable/ic_baseline_edit_24" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonUpdate"
             android:layout_width="match_parent"
