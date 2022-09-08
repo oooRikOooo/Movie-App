@@ -27,4 +27,9 @@
     <color name="sign_up_to_sign_in">#E41F2E</color>
     <color name="fab_background">#E21221</color>
     <color name="background_rating_of_favourite_film">#E21221</color>
+    <color name="sort_filter_main_red">#E21221</color>
+    <color name="Icon_background">#FDECEE</color>
+    <color name="search_view_background_grey">#F5F5F5</color>
+    <color name="text_sort_filter">#F75555</color>
+    <color name="button_reset">#FCE7E9</color>
 </resources>

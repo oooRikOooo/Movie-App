@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_details"
+    app:startDestination="@id/filmDetailsFragmentTable">
+    <fragment
+        android:id="@+id/filmDetailsFragmentTable"
+        android:name="com.example.filmshelper.presentation.screens.FilmDetailsFragment"
+        android:label="FilmDetailsFragment"
+        tools:layout="@layout/fragment_film_details">
+        <argument
+            android:name="filmId"
+            android:defaultValue="tt13130308"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
+</navigation>

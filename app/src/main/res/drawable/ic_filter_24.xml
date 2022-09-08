@@ -1,0 +1,24 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <group>
+        <path
+            android:name="square"
+            android:fillColor="@color/Icon_background"
+            android:pathData="M0,0 L48,0 L48,48 L0,48 z" />
+
+        <group
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:pivotX="24"
+            android:pivotY="24">
+            <path
+                android:fillColor="@color/sort_filter_main_red"
+                android:pathData="M21.35,42V30.75H24.35V34.9H42V37.9H24.35V42ZM6,37.9V34.9H18.35V37.9ZM15.35,29.6V25.5H6V22.5H15.35V18.3H18.35V29.6ZM21.35,25.5V22.5H42V25.5ZM29.65,17.25V6H32.65V10.1H42V13.1H32.65V17.25ZM6,13.1V10.1H26.65V13.1Z" />
+
+        </group>
+    </group>
+</vector>

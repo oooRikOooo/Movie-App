@@ -1,51 +1,52 @@
 package com.example.filmshelper.data
 
-import com.example.filmshelper.data.models.FilmDetails.FilmDetails
+import com.example.filmshelper.data.models.allFilmsWithQuery.FilmsWithQuery
+import com.example.filmshelper.data.models.filmDetails.FilmDetails
 import com.example.filmshelper.data.models.nowShowingMovies.NowShowingMovies
-import com.example.filmshelper.data.models.popularMovies.MostPopularMovies
-import com.example.filmshelper.data.models.popularTvShows.MostPopularTvShows
+import com.example.filmshelper.data.models.popular.popularMovies.PopularMovies
+import com.example.filmshelper.data.models.popular.popularTvShows.PopularTvShows
 import com.example.filmshelper.data.models.youtubeTrailer.YoutubeTrailer
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 private const val BASE_URL = "https://imdb-api.com/en/API/"
-private const val API_KEY2 = "k_8xhud37t"
-private const val API_KEY1 = "k_zvyokdrf"
+private const val API_KEY2 = "k_zny5h151"
+private const val API_KEY1 = "k_57b5u7uy"
 
 interface ApiService {
 
-    @GET("InTheaters/$API_KEY1")
-    suspend fun getMoviesInTheaters(): NowShowingMovies
+    @GET("AdvancedSearch/$API_KEY2?groups=now-playing-us")
+    suspend fun getMoviesInTheaters(
+        @Query("count") count: Int = 4
+    ): NowShowingMovies
 
-    @GET("MostPopularMovies/$API_KEY1")
-    suspend fun getPopularMovies(): MostPopularMovies
+    @GET("AdvancedSearch/$API_KEY2?title_type=feature&groups=top_100")
+    suspend fun getPopularMovies(
+        @Query("count") count: Int = 5
+    ): PopularMovies
 
-    @GET("MostPopularTVs/$API_KEY1")
-    suspend fun getPopularTvShows(): MostPopularTvShows
 
+    @GET("AdvancedSearch/$API_KEY2?title_type=tv_series&count=5")
+    suspend fun getPopularTvShows(): PopularTvShows
 
-    @GET("Title/$API_KEY1/{id}")
+    @GET("Title/$API_KEY2/{id}")
     suspend fun getMovieById(
-       @Path("id") id:String
+        @Path("id") id: String
     ): FilmDetails
 
-    @GET("YouTubeTrailer/$API_KEY1/{id}")
+    @GET("YouTubeTrailer/$API_KEY2/{id}")
     suspend fun getMovieTrailerById(
         @Path("id") id: String
     ): YoutubeTrailer
 
-    /*companion object {
-        operator fun invoke(): ApiService = Retrofit.Builder()
-            .baseUrl("https://imdb-api.com/en/API/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .build()
-            .create(ApiService::class.java)
-    }*/
+    @GET("AdvancedSearch/$API_KEY2")
+    suspend fun getFilmsWithQuery(
+        @Query("title") title: String,
+        @Query("title_type", encoded = true) titleType: String,
+        @Query("genres", encoded = true) genres: String,
+        @Query("count") count: Int = 16
+    ): FilmsWithQuery
+
 
 }

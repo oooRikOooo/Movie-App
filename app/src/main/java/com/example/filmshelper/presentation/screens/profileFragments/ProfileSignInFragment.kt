@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -39,18 +40,23 @@ class ProfileSignInFragment : Fragment() {
 
         binding = FragmentProfileSignInBinding.inflate(inflater, container, false)
 
+        val animation =
+            AnimationUtils.loadAnimation(requireContext(), R.animator.fade_in_sign_screen)
+
+        binding.signInContainer.startAnimation(animation)
+
         setOnClickListeners()
 
         return binding.root
     }
 
     private fun setOnClickListeners(){
-        binding.textViewToSignIn.setOnClickListener {
+        binding.textViewToSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_profileSignInFragment_to_profileSignUpFragment)
 
         }
 
-        binding.buttonSignUp.setOnClickListener {
+        binding.buttonSignIn.setOnClickListener {
             if (isEmpty()) {
                 Toast.makeText(requireContext(), "Fill all fields", Toast.LENGTH_SHORT).show()
             } else {

@@ -6,6 +6,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -37,6 +38,12 @@ class ProfileSignUpFragment : Fragment() {
     ): View {
 
         binding = FragmentProfileSignUpBinding.inflate(inflater, container, false)
+
+        val animation =
+            AnimationUtils.loadAnimation(requireContext(), R.animator.fade_in_sign_screen)
+
+        binding.signUpContainer.startAnimation(animation)
+
         setOnClickListeners()
 
         return binding.root

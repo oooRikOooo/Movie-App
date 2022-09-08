@@ -57,6 +57,54 @@
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/layout/toolbar.xml" value="0.358695652173913" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/menu-v26/bottom_menu.xml" value="0.365625" />
         <entry key="..\:/astudio/FilmsHelper/app/src/main/res/menu/bottom_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable-v23/splash_background.xml" value="0.235" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/bg_gradient.xml" value="0.225" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/bottom_sheet_filter_style.xml" value="0.3095" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/button_apply_bottom_sheet.xml" value="0.1785" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/button_reset_bottom_sheet.xml" value="0.1785" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/button_sort_filter_active.xml" value="0.3095" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/button_sort_filter_not_active.xml" value="0.3095" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/ic_baseline_favorite_not_pressed_24.xml" value="0.204" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/ic_baseline_play_circle_outline_24.xml" value="0.204" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/ic_filter_24.xml" value="0.3095" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/ic_launcher.xml" value="0.235" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/searchview_maps_style.xml" value="0.225" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/searcview_search_fragments_style.xml" value="0.3095" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/splash_background.xml" value="0.225" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/text_selector_bottom_sheet.xml" value="0.1895" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/drawable/tune-48px.xml" value="0.3095" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout-sw600dp/fragment_film_details.xml" value="0.27049180327868855" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout-sw600dp/fragment_main.xml" value="0.5" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout-sw600dp/fragment_search.xml" value="0.27049180327868855" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/activity_splash_screen.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/bottom_sheet_filter.xml" value="0.33" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/content_splash_screen.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/edit_profile_cardview.xml" value="0.18" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/favourite_movies_cardview.xml" value="0.1" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/fragment_edit_profile.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/fragment_favourites_films.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/fragment_film_details.xml" value="0.33" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/fragment_first.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/fragment_location.xml" value="0.18541666666666667" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/fragment_main.xml" value="0.25" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/fragment_maps.xml" value="0.18541666666666667" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/fragment_now_showing_films.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/fragment_profile_sign_in.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/fragment_profile_sign_up.xml" value="0.18541666666666667" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/fragment_search.xml" value="0.33" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/help_center_cardview.xml" value="0.18" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/item_favourite_films.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/item_search_films.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/logout_cardview.xml" value="0.18" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/notifications_cardview.xml" value="0.1" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/now_showing_item_list.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/now_showing_item_list_horizontal.xml" value="0.25" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/popular_item_list.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/selected_filter_item.xml" value="0.358695652173913" />
+        <entry key="..\:/astudio_projects/PetProject/pet-project/app/src/main/res/layout/trailer_activity.xml" value="0.1" />
       </map>
     </option>
   </component>

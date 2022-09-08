@@ -3,6 +3,7 @@ package com.example.filmshelper.presentation.screens.profileFragments
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -27,7 +28,7 @@ class EditProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentEditProfileBinding
 
-    private val viewModel : ProfileViewModel by viewModels{
+    private val viewModel: ProfileViewModel by viewModels {
         factory.create()
     }
 
@@ -35,6 +36,8 @@ class EditProfileFragment : Fragment() {
     lateinit var factory: ProfileViewModelFactory.Factory
 
     private var photoUri: Uri? = null
+
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onAttach(context: Context) {
         context.appComponent.inject(this)
@@ -47,8 +50,11 @@ class EditProfileFragment : Fragment() {
     ): View {
         binding = FragmentEditProfileBinding.inflate(inflater, container, false)
 
+        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
+
         binding.editTextPersonName.setText(viewModel.auth.currentUser?.displayName)
-        Picasso.get().load(viewModel.auth.currentUser!!.photoUrl).fit().centerCrop().into(binding.imageViewProfilePhoto)
+        Picasso.get().load(viewModel.auth.currentUser!!.photoUrl).fit().centerCrop()
+            .into(binding.imageViewProfilePhoto)
         photoUri = viewModel.auth.currentUser?.photoUrl
         setOnClickListeners()
 
@@ -75,8 +81,9 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun uploadPhoto(name: Editable) {
-        val ref = viewModel.storageRef.child("images/${viewModel.auth.currentUser?.uid}profilePicture")
-        if (photoUri == viewModel.auth.currentUser?.photoUrl){
+        val ref =
+            viewModel.storageRef.child("images/${viewModel.auth.currentUser?.uid}profilePicture")
+        if (photoUri == viewModel.auth.currentUser?.photoUrl) {
             updateProfile(name)
         } else {
             photoUri?.let { ref.putFile(it) }?.addOnProgressListener {
